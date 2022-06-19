@@ -1,4 +1,4 @@
-FILES = main.o dataTypes.h
+FILES = main.o dataTypes.h menu.o
 CFLAGS = -Wall -pedantic -std=c11
 
 all: ${FILES}
