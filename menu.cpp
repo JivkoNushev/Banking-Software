@@ -1,7 +1,5 @@
 #include <iostream>
-#include <string>
-
-using namespace std;
+#include "menu.h"
 
 void home_menu()
 {
