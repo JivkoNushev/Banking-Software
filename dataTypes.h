@@ -22,16 +22,6 @@ User(){}
     string get_password() { return password; }
     int get_id() { return userId; }
 
-    void set_balance(float new_balance)
-    {
-
-    }
-
-    float get_balance()
-    {
-
-    }
-
     bool withdraw()
     {
         float amount = 0, curr_balance = get_balance();
