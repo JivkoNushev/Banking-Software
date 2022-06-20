@@ -110,16 +110,16 @@ void menu(User *user)
         switch(input)
         {
             case 1:
-                withdraw();
+                user.withdraw();
                 break;
             case 2:
-                deposit();
+                user.deposit();
                 break;
             case 3:
-                transfer();
+                user.transfer();
                 break;
             case 4:
-                transactions();
+                user.transactions();
                 break;
             case 5:
                 system("cls");

@@ -20,6 +20,11 @@ public:
     string get_password() { return password; }
     string get_id() { return userId; }
 
+    void withdraw();
+    void deposit();
+    void transfer();
+    void transactions();
+
 };
 
 class Bill
