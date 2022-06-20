@@ -15,6 +15,10 @@ public:
 
     string add_user();
 
+    static bool user_exists(string username, string password);
+
+    static int user_id(string username);
+
     static bool username_exists(string username);
 
     static int generate_id(string username);

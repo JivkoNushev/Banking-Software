@@ -40,24 +40,25 @@ void home_menu(int number)
     
 }
 
-string signin_menu()
+int signin_menu()
 {
+    string username, password;
     do
     {
         system("cls");
         
         cout << "|               Sign in                   |\n";
-        string username, password;
+        
         cout << "Enter username: ";
         cin >> username;
         cout << "Enter password";
         cin >> password;
-    } while(!user_exists(username, password));
+    } while(!User::user_exists(username, password));
 
-    return user_id(username);
+    return User::user_id(username);
 }
 
-string signup_menu()
+int signup_menu()
 {
     string username, password;
     do
@@ -71,10 +72,11 @@ string signup_menu()
         cin >> password;
     } while(User::username_exists(username));
     User user(username, password, User::generate_id(username));
-    return user.add_user(); // returns id
+    user.add_user();
+    return user.get_id();
 }
 
-string print_home_menu()
+int print_home_menu()
 {
     system("cls");
     uint8_t input = -1;
@@ -92,7 +94,7 @@ string print_home_menu()
             case 3:
                 system("cls");
                 cout << "Exited from the bank";
-                return "";
+                return 0;
             default:
         }
         system("cls");

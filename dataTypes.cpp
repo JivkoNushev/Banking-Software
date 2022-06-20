@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "dataTypes.h"
+#include "hash.h"
 using namespace std;
 
 class User
@@ -21,12 +22,11 @@ User(){}
     string get_password() { return password; }
     int get_id() { return userId; }
 
-    string add_user()
+    void add_user()
     {
         ofstream file;
         file.open("user_database.txt", ios::app);
-        if (!file)
-            return "";
+        if (!file) return;
         file.write((char*)this, sizeof(*this));
         file.close();
     }
@@ -46,6 +46,40 @@ User(){}
             file.read((char*)&current_user, sizeof(current_user));
         } while (!file.eof());
         return false;
+    }
+
+    static bool user_exists(string username, string password)
+    {
+        ifstream file;
+        file.open("Database.txt", ios::in);
+
+        User current_user;
+
+        file.read((char*)&current_user, sizeof(current_user));
+        do
+        {
+            if (current_user.get_name() == username && current_user.get_password() == hash(password))
+                return true;
+            file.read((char*)&current_user, sizeof(current_user));
+        } while (!file.eof());
+        return false;
+    }
+
+    static int user_id(string username)
+    {
+        ifstream file;
+        file.open("Database.txt", ios::in);
+
+        User current_user;
+
+        file.read((char*)&current_user, sizeof(current_user));
+        do
+        {
+            if (current_user.get_name() == username)
+                return current_user.get_id();
+            file.read((char*)&current_user, sizeof(current_user));
+        } while (!file.eof());
+        return 0;
     }
 
     static int generate_id(string username)

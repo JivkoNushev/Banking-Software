@@ -3,7 +3,7 @@
 using namespace std;
 
 void print_menu();
-string print_home_menu();
-string signup_menu();
-string signin_menu();
+int print_home_menu();
+int signup_menu();
+int signin_menu();
 void home_menu();
