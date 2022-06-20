@@ -69,8 +69,8 @@ string signup_menu()
         cin >> username;
         cout << "Enter password";
         cin >> password;
-    } while(username_exists(username));
-    User user(username, password, User::generate_id());
+    } while(User::username_exists(username));
+    User user(username, password, User::generate_id(username));
     return user.add_user(); // returns id
 }
 
@@ -120,7 +120,7 @@ void menu(User &user)
                 user.transfer();
                 break;
             case 4:
-                user.transactions();
+                user.process_transaction();
                 break;
             case 5:
                 system("cls");
