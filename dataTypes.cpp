@@ -43,9 +43,13 @@ public:
         do
         {
             if (current_user.get_name() == username)
+            {
+                file.close();
                 return true;
+            }
             file.read((char*)&current_user, sizeof(current_user));
         } while (!file.eof());
+        file.close();
         return false;
     }
 
@@ -60,9 +64,13 @@ public:
         do
         {
             if (current_user.get_name() == username && current_user.get_password() == hash(password))
+            {
+                file.close();
                 return true;
+            }
             file.read((char*)&current_user, sizeof(current_user));
         } while (!file.eof());
+        file.close();
         return false;
     }
 
@@ -77,9 +85,13 @@ public:
         do
         {
             if (current_user.get_name() == username)
+            {
+                file.close();
                 return current_user.get_id();
+            }
             file.read((char*)&current_user, sizeof(current_user));
         } while (!file.eof());
+        file.close();
         return 0;
     }
 
@@ -99,6 +111,7 @@ public:
     bool withdraw()
     {
         float amount = 0, curr_balance = Bill::find_balance(userId);
+        cout << "Enter withdraw amount: ";
         cin >> amount;
 
         if(amount < 0 || curr_balance < amount)
@@ -114,6 +127,7 @@ public:
     bool deposit()
     {
         float amount = 0;
+        cout << "Enter deposit amount: ";
         cin >> amount;
 
         if(amount < 0)
@@ -129,8 +143,11 @@ public:
     bool transfer()
     {
         float amount = 0;
-        cin >> amount;
         string billNumber;
+
+        cout << "Enter transfer amount: ";
+        cin >> amount;
+        cout << "Enter bill number: ";
         cin >> billNumber;
 
         if(amount < 0 || Bill::bill_exists(billNumber))
@@ -173,7 +190,10 @@ public:
         do
         {
             if (current_bill.get_userId() == userId)
+            {
+                file.close();
                 return current_bill.get_balance();
+            }
             file.read((char*)&current_bill, sizeof(current_bill));
         } while (!file.eof());
         return 0;
@@ -196,7 +216,8 @@ public:
             buffer.write((char*)&current_bill, sizeof(current_bill));
             file.read((char*)&current_bill, sizeof(current_bill));
         } while (!file.eof());
-
+        file.close();
+        buffer.close();
         remove("bill_database.txt");
         rename("buffer_file.txt", "bill_database.txt");
         return 0;
@@ -213,9 +234,13 @@ public:
         do
         {
             if (current_bill.get_billNumber() == billNumber)
+            {
+                file.close();
                 return true;
+            }
             file.read((char*)&current_bill, sizeof(current_bill));
         } while (!file.eof());
+        file.close();
         return false;
     }
 
