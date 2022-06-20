@@ -22,7 +22,6 @@ User(){}
     string get_password() { return password; }
     int get_id() { return userId; }
 
-<<<<<<< HEAD
     void set_balance(float new_balance)
     {
 
@@ -79,7 +78,6 @@ User(){}
         return true;
     }
 
-=======
     int user_id(string username)
     {
         const int p = 31, m = 1e9 + 7;
@@ -92,12 +90,7 @@ User(){}
         }
         return hash_value;
     }
-    void withdraw();
-    void deposit();
-    void transfer();
->>>>>>> 1d71e9a7f7102c42f9b2263e67abfa25fa2c1963
-    void transactions();
-
+ 
 };
 
 class Bill
