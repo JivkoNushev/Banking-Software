@@ -34,6 +34,11 @@ User(){}
         }
         return hash_value;
     }
+    void withdraw();
+    void deposit();
+    void transfer();
+    void transactions();
+
 };
 
 class Bill
