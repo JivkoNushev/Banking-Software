@@ -18,5 +18,6 @@ int main(int argc, char** argv)
     }
     system("cls");
     cout << "Exited from the bank";
+    printf("alo da");
     return 0;
 }
