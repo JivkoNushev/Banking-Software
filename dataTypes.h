@@ -7,19 +7,33 @@ using namespace std;
 
 class User
 {
-    string userName, password, userId;
+    string userName, password;
+    int userId;
 public:
-    User(string userName, string password, string userId): userName(userName), password(password), userId(userId) 
+User(){}
+    User(string userName, string password, int userId): userName(userName), password(password), userId(userId) 
     {}
     
     void set_name(string name) { userName = name; }
     void set_password(string new_password) { password = new_password; }
-    void set_id(string new_id) { userId = new_id; }
+    void set_id(int new_id) { userId = new_id; }
 
     string get_name() { return userName; }
     string get_password() { return password; }
-    string get_id() { return userId; }
+    int get_id() { return userId; }
 
+    int user_id(string username)
+    {
+        const int p = 31, m = 1e9 + 7;
+        int hash_value = 0;
+        long p_pow = 1;
+        const int n = username.length();
+        for (int i = 0; i < n; ++i) {
+            hash_value = (hash_value + (username[i] - 'a' + 1) * p_pow) % m;
+            p_pow = (p_pow * p) % m;
+        }
+        return hash_value;
+    }
 };
 
 class Bill
