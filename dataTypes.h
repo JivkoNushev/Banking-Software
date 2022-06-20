@@ -32,7 +32,8 @@ public:
 
 class Bill
 {
-    string billNumber, userId;
+    string billNumber;
+    int userId;
     float balance;
 public:
     Bill(string billNumber, string userId, float balance);
@@ -42,9 +43,11 @@ public:
     void set_balance(float new_balance);
 
     string get_billNumber();
-    string get_userId();
+    int get_userId();
     float get_balance();
 
+    static float find_balance(int userId);
+    static void change_balance(int userId, float newBalance);        
     static bool bill_exists(string billNumber);
 };
 class Transactions

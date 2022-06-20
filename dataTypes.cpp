@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "dataTypes.h"
-#include "hash.h"
+// /#include "hash.h"
 using namespace std;
 
 class User
@@ -10,7 +10,8 @@ class User
     string userName, password;
     int userId;
 public:
-User(){}
+    User()
+    {}
     User(string userName, string password, int userId): userName(userName), password(password), userId(userId) 
     {}
     
@@ -34,7 +35,7 @@ User(){}
     static bool username_exists(string username)
     {
         ifstream file;
-        file.open("Database.txt", ios::in);
+        file.open("user_database.txt", ios::in);
 
         User current_user;
 
@@ -51,7 +52,7 @@ User(){}
     static bool user_exists(string username, string password)
     {
         ifstream file;
-        file.open("Database.txt", ios::in);
+        file.open("user_database.txt", ios::in);
 
         User current_user;
 
@@ -68,7 +69,7 @@ User(){}
     static int user_id(string username)
     {
         ifstream file;
-        file.open("Database.txt", ios::in);
+        file.open("user_database.txt", ios::in);
 
         User current_user;
 
@@ -97,7 +98,7 @@ User(){}
 
     bool withdraw()
     {
-        float amount = 0, curr_balance = get_balance();
+        float amount = 0, curr_balance = Bill::find_balance(userId);
         cin >> amount;
 
         if(amount < 0 || curr_balance < amount)
@@ -106,7 +107,7 @@ User(){}
             return false;
         }
 
-        set_balance(curr_balance - amount);
+        Bill::change_balance(userId, curr_balance - amount);
         return true;
     }
 
@@ -121,7 +122,7 @@ User(){}
             return false;
         }
 
-        set_balance(get_balance() + amount);
+        Bill::change_balance(userId, Bill::find_balance(userId) + amount);
         return true;
     }
 
@@ -144,23 +145,78 @@ User(){}
 
 class Bill
 {
-    string billNumber, userId;
+    string billNumber;
+    int userId;
     float balance;
 public:
-    Bill(string billNumber, string userId, float balance): billNumber(billNumber), userId(userId), balance(balance)
+    Bill()
+    {}
+    Bill(string billNumber, int userId, float balance): billNumber(billNumber), userId(userId), balance(balance)
     {}
 
     void set_billNumber(string bill_Number) { billNumber = bill_Number; }
-    void set_userId(string user_Id) { userId = user_Id; }
+    void set_userId(int user_Id) { userId = user_Id; }
     void set_balance(float new_balance) { balance = new_balance; }
 
     string get_billNumber() { return billNumber; }
-    string get_userId() { return userId; }
+    int get_userId() { return userId; }
     float get_balance() { return balance; }
+
+    static float find_balance(int userId)
+    {
+        ifstream file;
+        file.open("bill_database.txt", ios::in);
+
+        Bill current_bill;
+
+        file.read((char*)&current_bill, sizeof(current_bill));
+        do
+        {
+            if (current_bill.get_userId() == userId)
+                return current_bill.get_balance();
+            file.read((char*)&current_bill, sizeof(current_bill));
+        } while (!file.eof());
+        return 0;
+    }
+
+    static float change_balance(int userId, float newBalance)
+    {
+        ifstream file;
+        ofstream buffer;
+        file.open("bill_database.txt", ios::in);
+        buffer.open("buffer_file.txt", ios::app);
+
+        Bill current_bill;
+
+        file.read((char*)&current_bill, sizeof(current_bill));
+        do
+        {
+            if (current_bill.get_userId() == userId)
+                current_bill.set_balance(newBalance);
+            buffer.write((char*)&current_bill, sizeof(current_bill));
+            file.read((char*)&current_bill, sizeof(current_bill));
+        } while (!file.eof());
+
+        remove("bill_database.txt");
+        rename("buffer_file.txt", "bill_database.txt");
+        return 0;
+    }
 
     static bool bill_exists(string billNumber)
     {
-        
+        ifstream file;
+        file.open("bill_database.txt", ios::in);
+
+        Bill current_bill;
+
+        file.read((char*)&current_bill, sizeof(current_bill));
+        do
+        {
+            if (current_bill.get_billNumber() == billNumber)
+                return true;
+            file.read((char*)&current_bill, sizeof(current_bill));
+        } while (!file.eof());
+        return false;
     }
 
 };
