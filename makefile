@@ -11,8 +11,8 @@ clean:
 	rm *.o *.out
 
 open:
-	code main.c
+	code main.cpp dataTypes.h menu.cpp makefile
 
 OPEN:
-	gedit main.c
+	gedit main.cpp
 
