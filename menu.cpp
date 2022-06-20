@@ -59,18 +59,19 @@ string signin_menu()
 
 string signup_menu()
 {
+    string username, password;
     do
     {
         system("cls");
         
         cout << "|               Sign up                   |\n";
-        string username, password;
         cout << "Enter username: ";
         cin >> username;
         cout << "Enter password";
         cin >> password;
     } while(username_exists(username));
-    return add_user(username, password); // returns id
+    User user(username, password, User::generate_id());
+    return user.add_user(); // returns id
 }
 
 string print_home_menu()
