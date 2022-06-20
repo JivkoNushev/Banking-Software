@@ -1,9 +1,13 @@
 #include <iostream>
 #include "menu.h"
+#include "dataTypes.h"
 
-void home_menu()
+void home_menu(int number)
 {
-    cout << 
+    switch(number)
+    {
+        case 1:
+            cout << 
     "+----------------------------------------+\n"\
     "|               Home menu                |\n"\
     "| 1.Sign in                              |\n"\
@@ -16,6 +20,24 @@ void home_menu()
     "|                                        |\n"\
     "|                                        |\n"\
     "+----------------------------------------+\n";
+        break;
+        case 2:
+            cout << 
+    "+----------------------------------------+\n"\
+    "|               Home menu                |\n"\
+    "| 1.Withdraw                             |\n"\
+    "| 2.Deposit                              |\n"\
+    "| 3.Transfer                             |\n"\
+    "| 4.Transactions                         |\n"\
+    "| 5.Logout                               |\n"\
+    "|                                        |\n"\
+    "|                                        |\n"\
+    "|                                        |\n"\
+    "|                                        |\n"\
+    "+----------------------------------------+\n";
+        break;    
+    }
+    
 }
 
 string signin_menu()
@@ -55,11 +77,10 @@ string print_home_menu()
 {
     system("cls");
     uint8_t input = -1;
-
-    home_menu();
     
     while(1)
     {
+        home_menu(1);
         cin >> input;
         switch(input)
         {
@@ -73,14 +94,38 @@ string print_home_menu()
                 return "";
             default:
         }
-        
+        system("cls");
     }
-    
-    system("cls");
-    return ;
 }
 
-void print_menu()
+void menu(User *user)
 {
-    
+    system("cls");
+    uint8_t input = -1;
+
+    while(1)
+    {
+        home_menu(2);
+        cin >> input;
+        switch(input)
+        {
+            case 1:
+                withdraw();
+                break;
+            case 2:
+                deposit();
+                break;
+            case 3:
+                transfer();
+                break;
+            case 4:
+                transactions();
+                break;
+            case 5:
+                system("cls");
+                return;
+            default:
+        }
+        system("cls");
+    }
 }
