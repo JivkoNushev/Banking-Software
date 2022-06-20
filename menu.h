@@ -2,7 +2,8 @@
 
 using namespace std;
 
-string print_menu();
+void print_menu();
+string print_home_menu();
 string signup_menu();
-void signin_menu();
+string signin_menu();
 void home_menu();

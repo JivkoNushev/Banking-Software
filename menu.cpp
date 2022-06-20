@@ -18,7 +18,7 @@ void home_menu()
     "+----------------------------------------+\n";
 }
 
-void signin_menu()
+string signin_menu()
 {
     do
     {
@@ -51,27 +51,36 @@ string signup_menu()
     return add_user(username, password); // returns id
 }
 
-string print_menu()
+string print_home_menu()
 {
     system("cls");
     uint8_t input = -1;
 
     home_menu();
-    cin >> input;
-
-    switch(input)
+    
+    while(1)
     {
-        case 1:
-            signin_menu();
-            break;
-        case 2:
-            signup_menu();
-            break;
-        case 3:
-            system("cls");
-            cout << "Exited from the bank";
-            return "";
+        cin >> input;
+        switch(input)
+        {
+            case 1:
+                return signin_menu();
+            case 2:
+                return signup_menu();
+            case 3:
+                system("cls");
+                cout << "Exited from the bank";
+                return "";
+            default:
+        }
+        
     }
+    
     system("cls");
     return ;
+}
+
+void print_menu()
+{
+    
 }
