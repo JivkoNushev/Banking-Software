@@ -151,5 +151,3 @@ public:
     float get_transferAmount() { return transferAmount; }
 
 };
-
-#endif
