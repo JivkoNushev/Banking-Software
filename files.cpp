@@ -17,16 +17,7 @@ bool username_exists(string username)
 		if (current_user.get_name() == username)
 			return true;
 	    file.read((char*)&current_user, sizeof(current_user));
-	}while (!file.eof());
+	} while (!file.eof());
     return false;
 }
 
-string add_user(string username, string password)
-{
-	ofstream file;
-	file.open("Input.txt", ios::app);
-
-    string userId = user_id(username);
-	User new_user(username,password,userId);
-
-}

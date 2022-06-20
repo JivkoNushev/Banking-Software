@@ -22,18 +22,29 @@ User(){}
     string get_password() { return password; }
     int get_id() { return userId; }
 
-    int user_id(string username)
+    string add_user()
+    {
+        ofstream file;
+        file.open("user_database.txt", ios::app);
+        if (!file)
+            return "";
+        file.write((char*)this, sizeof(*this));
+        file.close();
+    }
+
+    static int generate_id(string username)
     {
         const int p = 31, m = 1e9 + 7;
-        int hash_value = 0;
-        long p_pow = 1;
+        int hashValue = 0;
+        long pPow = 1;
         const int n = username.length();
         for (int i = 0; i < n; ++i) {
-            hash_value = (hash_value + (username[i] - 'a' + 1) * p_pow) % m;
-            p_pow = (p_pow * p) % m;
+            hashValue = (hashValue + (username[i] - 'a' + 1) * pPow) % m;
+            pPow = (pPow * p) % m;
         }
-        return hash_value;
+        return hashValue;
     }
+
     void withdraw();
     void deposit();
     void transfer();
