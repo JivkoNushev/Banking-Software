@@ -20,9 +20,62 @@ public:
     string get_password() { return password; }
     string get_id() { return userId; }
 
-    void withdraw();
-    void deposit();
-    void transfer();
+    void set_balance(float new_balance)
+    {
+
+    }
+
+    float get_balance()
+    {
+
+    }
+
+    bool withdraw()
+    {
+        float amount = 0, curr_balance = get_balance();
+        cin >> amount;
+
+        if(amount < 0 || curr_balance < amount)
+        {
+            cout << "\nCan't withdraw that amount\n";
+            return false;
+        }
+
+        set_balance(curr_balance - amount);
+        return true;
+    }
+
+    bool deposit()
+    {
+        float amount = 0;
+        cin >> amount;
+
+        if(amount < 0)
+        {
+            cout << "\nCan't deposit that amount\n";
+            return false;
+        }
+
+        set_balance(get_balance() + amount);
+        return true;
+    }
+
+    bool transfer()
+    {
+        float amount = 0;
+        cin >> amount;
+        string billNumber;
+        cin >> billNumber;
+
+        if(amount < 0 || Bill::bill_exists(billNumber))
+        {
+            cout << "\nCan't transfer that amount to that billNumber\n";
+            return false;
+        }   
+
+        return true;
+    }
+
     void transactions();
 
 };
@@ -30,39 +83,44 @@ public:
 class Bill
 {
     string billNumber, userId;
-    int balance;
+    float balance;
 public:
-    Bill(string billNumber, string userId, int balance): billNumber(billNumber), userId(userId), balance(balance)
+    Bill(string billNumber, string userId, float balance): billNumber(billNumber), userId(userId), balance(balance)
     {}
 
     void set_billNumber(string bill_Number) { billNumber = bill_Number; }
     void set_userId(string user_Id) { userId = user_Id; }
-    void set_balance(int new_balance) { balance = new_balance; }
+    void set_balance(float new_balance) { balance = new_balance; }
 
     string get_billNumber() { return billNumber; }
     string get_userId() { return userId; }
-    int get_balance() { return balance; }
+    float get_balance() { return balance; }
+
+    static bool bill_exists(string billNumber)
+    {
+        
+    }
 
 };
 
 class Transactions
 {
     string operationCode, billNumberFrom, billNumberTo;
-    int transferAmount;
+    float transferAmount;
 public:
-    Transactions(string operationCode, string billNumberFrom, string billNumberTo, int transferAmount): 
+    Transactions(string operationCode, string billNumberFrom, string billNumberTo, float transferAmount): 
     operationCode(operationCode), billNumberFrom(billNumberFrom), billNumberTo(billNumberTo), transferAmount(transferAmount)
     {}
 
     void set_operationCode(string new_operationCode) { operationCode = new_operationCode; }
     void set_billNumberFrom(string new_billNumberFrom) { billNumberFrom = new_billNumberFrom; }
     void set_billNumberTo(string new_billNumberTo) { billNumberTo = new_billNumberTo; }
-    void set_transferAmount(int new_transferAmount) { transferAmount = new_transferAmount; }
+    void set_transferAmount(float new_transferAmount) { transferAmount = new_transferAmount; }
 
     string get_operationCode() { return operationCode; }
     string get_billNumberFrom() { return billNumberFrom; }
     string get_billNumberTo() { return billNumberTo; }
-    int get_transferAmount() { return transferAmount; }
+    float get_transferAmount() { return transferAmount; }
 
 };
 

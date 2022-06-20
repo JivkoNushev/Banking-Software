@@ -98,7 +98,7 @@ string print_home_menu()
     }
 }
 
-void menu(User *user)
+void menu(User &user)
 {
     system("cls");
     uint8_t input = -1;
