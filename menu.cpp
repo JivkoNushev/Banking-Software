@@ -1,6 +1,6 @@
 #include "menu.h"
 #include "user.h"
-#include "transactions.h"
+#include "transaction.h"
 using namespace std;
 
 void home_menu(int number)
@@ -124,7 +124,7 @@ void menu(User &user)
                 user.transfer(&queue);
                 break;
             case 4:
-                Transaction::process_transaction(&queue);
+                Transaction::process_transactions(&queue);
                 break;
             case 5:
                 system("cls");

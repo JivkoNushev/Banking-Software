@@ -13,8 +13,8 @@ public:
     User(string userName, string password, int userId);
 
     void set_name(string name);
-    void set_password(string new_password);
-    void set_id(int new_id);
+    void set_password(string newPassword);
+    void set_id(int newId);
 
     string get_name();
     string get_password();

@@ -9,6 +9,7 @@ class Transaction
     string operationCode, billNumberFrom, billNumberTo;
     float transferAmount;
 public:
+    Transaction();
     Transaction(string operationCode, string billNumberFrom, string billNumberTo, float transferAmount);
 
     void set_operationCode(string newOperationCode);
@@ -21,5 +22,6 @@ public:
     string get_billNumberTo();
     float get_transferAmount();
 
-    static void process_transaction(queue<Transaction> *queue);
+    static void process_transactions(queue<Transaction> *queue);
+    
 };

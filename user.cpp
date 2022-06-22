@@ -1,6 +1,6 @@
 #include "bill.h"
 #include "user.h"
-#include "transactions.h"
+#include "transaction.h"
 #include "hash.h"
 
 class User
@@ -14,8 +14,8 @@ public:
     {}
     
     void set_name(string name) { userName = name; }
-    void set_password(string new_password) { password = new_password; }
-    void set_id(int new_id) { userId = new_id; }
+    void set_password(string newPassword) { password = newPassword; }
+    void set_id(int newId) { userId = newId; }
 
     string get_name() { return userName; }
     string get_password() { return password; }
@@ -45,17 +45,17 @@ public:
             return false;
         }
 
-        User current_user;
+        User currentUser;
 
-        file.read((char*)&current_user, sizeof(current_user));
+        file.read((char*)&currentUser, sizeof(currentUser));
         do
         {
-            if (current_user.get_name() == username)
+            if (currentUser.get_name() == username)
             {
                 file.close();
                 return true;
             }
-            file.read((char*)&current_user, sizeof(current_user));
+            file.read((char*)&currentUser, sizeof(currentUser));
         } while (!file.eof());
         file.close();
         return false;
@@ -71,17 +71,17 @@ public:
             return false;
         }
 
-        User current_user;
+        User currentUser;
 
-        file.read((char*)&current_user, sizeof(current_user));
+        file.read((char*)&currentUser, sizeof(currentUser));
         do
         {
-            if (current_user.get_name() == username && current_user.get_password() == hash_string(password))
+            if (currentUser.get_name() == username && currentUser.get_password() == hash_string(password))
             {
                 file.close();
                 return true;
             }
-            file.read((char*)&current_user, sizeof(current_user));
+            file.read((char*)&currentUser, sizeof(currentUser));
         } while (!file.eof());
         file.close();
         return false;
@@ -97,17 +97,17 @@ public:
             return 0;
         }
 
-        User current_user;
+        User currentUser;
 
-        file.read((char*)&current_user, sizeof(current_user));
+        file.read((char*)&currentUser, sizeof(currentUser));
         do
         {
-            if (current_user.get_name() == username)
+            if (currentUser.get_name() == username)
             {
                 file.close();
-                return current_user.get_id();
+                return currentUser.get_id();
             }
-            file.read((char*)&current_user, sizeof(current_user));
+            file.read((char*)&currentUser, sizeof(currentUser));
         } while (!file.eof());        
         file.close();
         return 0;
@@ -128,17 +128,17 @@ public:
 
     bool withdraw()
     {
-        float amount = 0, curr_balance = Bill::find_balance(userId);
+        float amount = 0, currBalance = Bill::find_balance(userId);
         cout << "Enter withdraw amount: ";
         cin >> amount;
 
-        if(amount < 0 || curr_balance < amount)
+        if(amount < 0 || currBalance < amount)
         {
             cout << "\nCan't withdraw that amount\n";
             return false;
         }
 
-        Bill::change_balance(userId, curr_balance - amount);
+        Bill::change_balance(userId, currBalance - amount);
         return true;
     }
 
@@ -178,9 +178,18 @@ public:
         string operationCode = "transfer";
         Transaction newTransaction(operationCode,billNumberFrom,billNumberTo,transferAmount);
 
-        (*queue).push(newTransaction);
+        ofstream file;
+        file.open("transactions.txt", ios::app);
+        if(!file)
+        {
+            cout << "File error" << endl;
+            return false;
+        }
 
+        file.write((char*)&newTransaction, sizeof(newTransaction));
+        file.close();
+
+        (*queue).push(newTransaction);
         return true;
     } 
-
 };

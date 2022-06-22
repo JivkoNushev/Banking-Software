@@ -1,11 +1,13 @@
-#include "transactions.h"
+#include "transaction.h"
+#include "bill.h"
 
-class Transactions
+class Transaction
 {
     string operationCode, billNumberFrom, billNumberTo;
     float transferAmount;
 public:
-    Transactions(string operationCode, string billNumberFrom, string billNumberTo, float transferAmount): 
+    Transaction(){}
+    Transaction(string operationCode, string billNumberFrom, string billNumberTo, float transferAmount): 
     operationCode(operationCode), billNumberFrom(billNumberFrom), billNumberTo(billNumberTo), transferAmount(transferAmount)
     {}
 
@@ -19,25 +21,17 @@ public:
     string get_billNumberTo() { return billNumberTo; }
     float get_transferAmount() { return transferAmount; }
 
-    static void process_transaction(queue<Transaction> *queue)
+    static void process_transactions(queue<Transaction> *queue)
     {
-        ifstream file;
-        file.open("transactions.txt", ios::in);
-        if(!file)
+        
+        while (!(*queue).empty())
         {
-            cout << "File error" << endl;
-            return;
+            Transaction currentTransaction = (*queue).front();
+            //get current balance
+            //check if enough money
+            //remove money from "From"
+            //give money to "To"
+            (*queue).pop();
         }
-
-        Transaction current_transaction;
-
-        file.read((char*)&current_transaction, sizeof(current_transaction));
-        do
-        {
-            //do
-            file.read((char*)&current_transaction, sizeof(current_transaction));
-        } while (!file.eof());
-
-        file.close();
     }
 };
