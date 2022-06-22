@@ -1,5 +1,6 @@
 #include "bill.h"
 #include "user.h"
+#include "transactions.h"
 #include "hash.h"
 
 class User
@@ -139,20 +140,24 @@ public:
 
     bool transfer()
     {
-        float amount = 0;
-        string billNumber;
+        float transferAmount = 0;
+        string billNumberTo;
 
         cout << "Enter transfer amount: ";
-        cin >> amount;
+        cin >> transferAmount;
         cout << "Enter bill number: ";
-        cin >> billNumber;
+        cin >> billNumberTo;
 
-        if(amount < 0 || Bill::bill_exists(billNumber))
+        if(transferAmount < 0 || Bill::bill_exists(billNumberTo))
         {
             cout << "\nCan't transfer that amount to that billNumber\n";
             return false;
         }   
         //Ако въведените данни са правилни се генерира запис за транзакция и се добавя в опашката за транзакции
+        
+        //find bill user:this->get_id();
+        string operationCode = "transfer";
+        Transaction newTransaction(operationCode,billNumberFrom,billNumberTo,transferAmount);
 
         return true;
     } 

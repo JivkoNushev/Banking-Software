@@ -11,9 +11,9 @@ public:
     Bill(string billNumber, int userId, float balance): billNumber(billNumber), userId(userId), balance(balance)
     {}
 
-    void set_billNumber(string bill_Number) { billNumber = bill_Number; }
-    void set_userId(int user_Id) { userId = user_Id; }
-    void set_balance(float new_balance) { balance = new_balance; }
+    void set_billNumber(string newBillNumber) { billNumber = newBillNumber; }
+    void set_userId(int newUserId) { userId = newUserId; }
+    void set_balance(float newBalance) { balance = newBalance; }
 
     string get_billNumber() { return billNumber; }
     int get_userId() { return userId; }
@@ -84,4 +84,24 @@ public:
         return false;
     }
 
+    string find_bill_number(int userId)
+    {
+        ifstream file;
+        file.open("bill_database.txt", ios::in);
+
+        Bill current_bill;
+
+        file.read((char*)&current_bill, sizeof(current_bill));
+        do
+        {
+            if (current_bill.get_userId() == userId)
+            {
+                file.close();
+                return current_bill.get_billNumber();
+            }
+            file.read((char*)&current_bill, sizeof(current_bill));
+        } while (!file.eof());
+        file.close();
+        return false;
+    }
 };

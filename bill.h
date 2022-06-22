@@ -9,11 +9,11 @@ class Bill
     int userId;
     float balance;
 public:
-    Bill(string billNumber, string userId, float balance);
+    Bill(string billNumber, int userId, float balance);
 
-    void set_billNumber(string bill_Number);
-    void set_userId(string user_Id);
-    void set_balance(float new_balance);
+    void set_billNumber(string billNumber);
+    void set_userId(int userId);
+    void set_balance(float newBalance);
 
     string get_billNumber();
     int get_userId();
@@ -22,4 +22,5 @@ public:
     static float find_balance(int userId);
     static void change_balance(int userId, float newBalance);        
     static bool bill_exists(string billNumber);
+    string find_bill_number(int userId);
 };
