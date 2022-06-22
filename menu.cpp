@@ -1,6 +1,6 @@
 #include <iostream>
 #include "menu.h"
-#include "dataTypes.h"
+#include "user.h"
 
 void home_menu(int number)
 {

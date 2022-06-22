@@ -34,4 +34,6 @@ public:
     bool deposit();
 
     bool transfer();
+
+    void process_transaction();
 };

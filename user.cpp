@@ -1,6 +1,6 @@
 #include "bill.h"
 #include "user.h"
-//#include "hash.h"
+#include "hash.h"
 
 class User
 {
@@ -60,7 +60,7 @@ public:
         file.read((char*)&current_user, sizeof(current_user));
         do
         {
-            if (current_user.get_name() == username && current_user.get_password() == hash(password))
+            if (current_user.get_name() == username && current_user.get_password() == hash_string(password))
             {
                 file.close();
                 return true;
@@ -152,6 +152,7 @@ public:
             cout << "\nCan't transfer that amount to that billNumber\n";
             return false;
         }   
+        //Ако въведените данни са правилни се генерира запис за транзакция и се добавя в опашката за транзакции
 
         return true;
     } 
