@@ -9,10 +9,10 @@ public:
     operationCode(operationCode), billNumberFrom(billNumberFrom), billNumberTo(billNumberTo), transferAmount(transferAmount)
     {}
 
-    void set_operationCode(string new_operationCode) { operationCode = new_operationCode; }
-    void set_billNumberFrom(string new_billNumberFrom) { billNumberFrom = new_billNumberFrom; }
-    void set_billNumberTo(string new_billNumberTo) { billNumberTo = new_billNumberTo; }
-    void set_transferAmount(float new_transferAmount) { transferAmount = new_transferAmount; }
+    void set_operationCode(string newOperationCode) { operationCode = newOperationCode; }
+    void set_billNumberFrom(string newBillNumberFrom) { billNumberFrom = newBillNumberFrom; }
+    void set_billNumberTo(string newBillNumberTo) { billNumberTo = newBillNumberTo; }
+    void set_transferAmount(float newTransferAmount) { transferAmount = newTransferAmount; }
 
     string get_operationCode() { return operationCode; }
     string get_billNumberFrom() { return billNumberFrom; }
