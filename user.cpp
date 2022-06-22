@@ -25,7 +25,12 @@ public:
     {
         ofstream file;
         file.open("user_database.txt", ios::app);
-        if (!file) return;
+        if(!file)
+        {
+            cout << "File error" << endl;
+            return;
+        }
+
         file.write((char*)this, sizeof(*this));
         file.close();
     }
@@ -34,6 +39,11 @@ public:
     {
         ifstream file;
         file.open("user_database.txt", ios::in);
+        if(!file)
+        {
+            cout << "File error" << endl;
+            return false;
+        }
 
         User current_user;
 
@@ -55,6 +65,11 @@ public:
     {
         ifstream file;
         file.open("user_database.txt", ios::in);
+        if(!file)
+        {
+            cout << "File error" << endl;
+            return false;
+        }
 
         User current_user;
 
@@ -76,6 +91,11 @@ public:
     {
         ifstream file;
         file.open("user_database.txt", ios::in);
+        if(!file)
+        {
+            cout << "File error" << endl;
+            return 0;
+        }
 
         User current_user;
 
@@ -88,7 +108,7 @@ public:
                 return current_user.get_id();
             }
             file.read((char*)&current_user, sizeof(current_user));
-        } while (!file.eof());
+        } while (!file.eof());        
         file.close();
         return 0;
     }
@@ -138,7 +158,7 @@ public:
         return true;
     }
 
-    bool transfer()
+    bool transfer(queue<Transaction> *queue)
     {
         float transferAmount = 0;
         string billNumberTo;
@@ -147,18 +167,20 @@ public:
         cin >> transferAmount;
         cout << "Enter bill number: ";
         cin >> billNumberTo;
-
+        
         if(transferAmount < 0 || Bill::bill_exists(billNumberTo))
         {
             cout << "\nCan't transfer that amount to that billNumber\n";
             return false;
-        }   
-        //Ако въведените данни са правилни се генерира запис за транзакция и се добавя в опашката за транзакции
+        }
         
-        //find bill user:this->get_id();
+        string billNumberFrom = Bill::find_bill_number(this->get_id());
         string operationCode = "transfer";
         Transaction newTransaction(operationCode,billNumberFrom,billNumberTo,transferAmount);
 
+        (*queue).push(newTransaction);
+
         return true;
     } 
+
 };

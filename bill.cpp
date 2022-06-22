@@ -23,6 +23,11 @@ public:
     {
         ifstream file;
         file.open("bill_database.txt", ios::in);
+        if(!file)
+        {
+            cout << "File error" << endl;
+            return 0;
+        }
 
         Bill current_bill;
 
@@ -36,6 +41,8 @@ public:
             }
             file.read((char*)&current_bill, sizeof(current_bill));
         } while (!file.eof());
+
+        file.close();
         return 0;
     }
 
@@ -43,8 +50,21 @@ public:
     {
         ifstream file;
         ofstream buffer;
+
         file.open("bill_database.txt", ios::in);
+        if(!file)
+        {
+            cout << "File error" << endl;
+            return 0;
+        }
+
         buffer.open("buffer_file.txt", ios::app);
+        if(!buffer)
+        {
+            file.close();
+            cout << "File error" << endl;
+            return 0;
+        }
 
         Bill current_bill;
 
@@ -56,10 +76,13 @@ public:
             buffer.write((char*)&current_bill, sizeof(current_bill));
             file.read((char*)&current_bill, sizeof(current_bill));
         } while (!file.eof());
+
         file.close();
         buffer.close();
+        
         remove("bill_database.txt");
         rename("buffer_file.txt", "bill_database.txt");
+        
         return 0;
     }
 
@@ -67,6 +90,11 @@ public:
     {
         ifstream file;
         file.open("bill_database.txt", ios::in);
+        if(!file)
+        {
+            cout << "File error" << endl;
+            return 0;
+        }
 
         Bill current_bill;
 
@@ -84,11 +112,16 @@ public:
         return false;
     }
 
-    string find_bill_number(int userId)
+    static string find_bill_number(int userId)
     {
         ifstream file;
         file.open("bill_database.txt", ios::in);
-
+        if(!file)
+        {
+            cout << "File error" << endl;
+            return 0;
+        }
+        
         Bill current_bill;
 
         file.read((char*)&current_bill, sizeof(current_bill));

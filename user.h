@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <queue>
 #include "bill.h"
 using namespace std;
 
@@ -33,7 +34,5 @@ public:
 
     bool deposit();
 
-    bool transfer();
-
-    void process_transaction();
+    bool transfer(queue<Transaction> *queue);
 };

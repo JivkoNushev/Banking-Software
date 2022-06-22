@@ -1,6 +1,7 @@
-#include <iostream>
 #include "menu.h"
 #include "user.h"
+#include "transactions.h"
+using namespace std;
 
 void home_menu(int number)
 {
@@ -105,7 +106,8 @@ void menu(User &user)
 {
     system("cls");
     uint8_t input = -1;
-
+    
+    queue<Transaction> queue;
     while(1)
     {
         home_menu(2);
@@ -119,10 +121,10 @@ void menu(User &user)
                 user.deposit();
                 break;
             case 3:
-                user.transfer();
+                user.transfer(&queue);
                 break;
             case 4:
-                user.process_transaction();
+                Transaction::process_transaction(&queue);
                 break;
             case 5:
                 system("cls");
