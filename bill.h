@@ -21,6 +21,7 @@ public:
 
     static float find_balance(int userId);
     static void change_balance(int userId, float newBalance);        
-    static bool bill_exists(string billNumber);
     static string find_bill_number(int userId);
+    static bool bill_exists(string billNumber);
+    static int find_user_id(string billNumber);
 };

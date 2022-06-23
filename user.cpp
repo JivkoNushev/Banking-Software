@@ -158,7 +158,7 @@ public:
         return true;
     }
 
-    bool transfer(queue<Transaction> *queue)
+    bool transfer()
     {
         float transferAmount = 0;
         string billNumberTo;
@@ -189,7 +189,6 @@ public:
         file.write((char*)&newTransaction, sizeof(newTransaction));
         file.close();
 
-        (*queue).push(newTransaction);
         return true;
     } 
 };

@@ -1,7 +1,6 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <queue>
 using namespace std;
 
 class Transaction
@@ -22,6 +21,5 @@ public:
     string get_billNumberTo();
     float get_transferAmount();
 
-    static void process_transactions(queue<Transaction> *queue);
-    
+    static void process_transactions();
 };

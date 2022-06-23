@@ -44,6 +44,9 @@
         "xstddef": "cpp",
         "xtr1common": "cpp",
         "xutility": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "algorithm": "cpp",
+        "deque": "cpp",
+        "vector": "cpp"
     }
 }
