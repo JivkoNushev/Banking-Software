@@ -160,6 +160,5 @@ public:
             file.read((char*)&current_bill, sizeof(current_bill));
         } while (!file.eof());
         file.close();
-        return false;
     }
 };

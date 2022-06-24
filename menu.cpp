@@ -97,11 +97,15 @@ int print_home_menu()
                 cout << "Exited from the bank";
                 return 0;
             default:
+                break;
         }
         system("cls");
     }
 }
 
+// :-
+//////TODO: nikude ne se generira billNumber
+//
 void menu(User &user)
 {
     system("cls");
@@ -129,6 +133,7 @@ void menu(User &user)
                 system("cls");
                 return;
             default:
+                break;
         }
         system("cls");
     }

@@ -53,16 +53,15 @@ public:
                 cout << "Invalid balance!"<< endl;
                 continue;
             }
+
             //remove money from "From"
             Bill::change_balance(userIdFrom,balanceFrom - currentTransaction.transferAmount);
             //give money to "To"
             Bill::change_balance(userIdTo,balanceTo + currentTransaction.transferAmount);
-            //pop
 
+            //read next            
             file.read((char*)&currentTransaction, sizeof(currentTransaction));
         } while (!file.eof());
-
-            
 
         file.close();
         return true;
