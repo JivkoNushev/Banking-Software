@@ -83,8 +83,7 @@ int signup_menu()
 int print_home_menu()
 {
     system("cls");
-    uint8_t input = -1;
-    
+    int input = -1;
     while(1)
     {
         home_menu(1);

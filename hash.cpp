@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
-#include <stdint-gcc.h>
+//#include <stdint-gcc.h>
 #include <string.h>
-#include <byteswap.h>
+//#include <byteswap.h>
 #include "hash.h"
 using namespace std;
 
@@ -41,9 +41,10 @@ void print(uint8_t *input, int size)
 }
 
 //TODO: little and big endian
-int main()
+int alo()
 {
-    char *input = "abc";
+    char a[] = "abc";
+    char *input = a;
 
     uint64_t length = strlen(input);
     int curr_block_length = 0;
@@ -75,4 +76,9 @@ int main()
         print_binary_number(length * 8);
         // print(block, curr_block_length);
     }
+}
+
+string hash_string(string input)
+{
+    return input;
 }

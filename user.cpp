@@ -42,6 +42,8 @@ bool User::username_exists(string username)
 
     User currentUser;
 
+    if(file.peek() == std::ifstream::traits_type::eof()) return false;
+
     file.read((char*)&currentUser, sizeof(currentUser));
     do
     {
