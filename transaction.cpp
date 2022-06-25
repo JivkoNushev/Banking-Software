@@ -5,11 +5,12 @@ class Transaction
 {
     string operationCode, billNumberFrom, billNumberTo;
     float transferAmount;
+
 public:
-    Transaction(){}
-    Transaction(string operationCode, string billNumberFrom, string billNumberTo, float transferAmount): 
-    operationCode(operationCode), billNumberFrom(billNumberFrom), billNumberTo(billNumberTo), transferAmount(transferAmount)
-    {}
+    Transaction() {}
+    Transaction(string operationCode, string billNumberFrom, string billNumberTo, float transferAmount) : operationCode(operationCode), billNumberFrom(billNumberFrom), billNumberTo(billNumberTo), transferAmount(transferAmount)
+    {
+    }
 
     void set_operationCode(string newOperationCode) { operationCode = newOperationCode; }
     void set_billNumberFrom(string newBillNumberFrom) { billNumberFrom = newBillNumberFrom; }
@@ -24,8 +25,8 @@ public:
     static bool process_transactions()
     {
         ifstream file;
-        file.open("transactions.txt",ios::in);
-        if(!file)
+        file.open("transactions.txt", ios::in);
+        if (!file)
         {
             cout << "File error" << endl;
             return false;
@@ -33,37 +34,39 @@ public:
 
         Transaction currentTransaction;
 
-        file.read((char*)&currentTransaction, sizeof(currentTransaction));
+        file.read((char *)&currentTransaction, sizeof(currentTransaction));
         do
         {
-            if(!Bill::bill_exists(currentTransaction.billNumberFrom) || !Bill::bill_exists(currentTransaction.billNumberFrom))
+            if (!Bill::bill_exists(currentTransaction.billNumberFrom) || !Bill::bill_exists(currentTransaction.billNumberFrom))
             {
                 cout << "Invalid bill number!" << endl;
                 return false;
             }
-            int userIdFrom = Bill::find_user_id(currentTransaction.billNumberFrom);
-            int userIdTo = Bill::find_user_id(currentTransaction.billNumberTo);
 
-            //get current balance
-            float balanceFrom = Bill::find_balance(userIdFrom);
-            float balanceTo = Bill::find_balance(userIdTo);
-            //check if enough money From
-            if(balanceFrom < 0)
+            // get current balance
+            float balanceFrom = Bill::find_balance(currentTransaction.billNumberFrom);
+            float balanceTo = Bill::find_balance(currentTransaction.billNumberTo);
+            // check if enough money From
+            if (balanceFrom < 0)
             {
-                cout << "Invalid balance!"<< endl;
+                cout << "Invalid balance!" << endl;
                 continue;
             }
 
-            //remove money from "From"
-            Bill::change_balance(userIdFrom,balanceFrom - currentTransaction.transferAmount);
-            //give money to "To"
-            Bill::change_balance(userIdTo,balanceTo + currentTransaction.transferAmount);
+            // remove money from "From"
+            Bill::change_balance(currentTransaction.billNumberFrom, balanceFrom - currentTransaction.transferAmount);
+            // give money to "To"
+            Bill::change_balance(currentTransaction.billNumberTo, balanceTo + currentTransaction.transferAmount);
 
-            //read next            
-            file.read((char*)&currentTransaction, sizeof(currentTransaction));
+            // read next
+            file.read((char *)&currentTransaction, sizeof(currentTransaction));
         } while (!file.eof());
-
         file.close();
+
+        //delete processed transactions 
+        ofstream file("transactions.txt");
+        file.close();
+        
         return true;
     }
 };

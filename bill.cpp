@@ -46,6 +46,33 @@ public:
         return 0;
     }
 
+    static float find_balance(string billNumber)
+    {
+        ifstream file;
+        file.open("bill_database.txt", ios::in);
+        if(!file)
+        {
+            cout << "File error" << endl;
+            return 0;
+        }
+
+        Bill current_bill;
+
+        file.read((char*)&current_bill, sizeof(current_bill));
+        do
+        {
+            if (current_bill.get_billNumber() == billNumber)
+            {
+                file.close();
+                return current_bill.get_balance();
+            }
+            file.read((char*)&current_bill, sizeof(current_bill));
+        } while (!file.eof());
+
+        file.close();
+        return 0;
+    }
+
     static float change_balance(int userId, float newBalance)
     {
         ifstream file;
@@ -86,6 +113,46 @@ public:
         return 0;
     }
 
+    static float change_balance(string billNumber, float newBalance)
+    {
+        ifstream file;
+        ofstream buffer;
+
+        file.open("bill_database.txt", ios::in);
+        if(!file)
+        {
+            cout << "File error" << endl;
+            return 0;
+        }
+
+        buffer.open("buffer_file.txt", ios::app);
+        if(!buffer)
+        {
+            file.close();
+            cout << "File error" << endl;
+            return 0;
+        }
+
+        Bill current_bill;
+
+        file.read((char*)&current_bill, sizeof(current_bill));
+        do
+        {
+            if (current_bill.get_billNumber() == billNumber)
+                current_bill.set_balance(newBalance);
+            buffer.write((char*)&current_bill, sizeof(current_bill));
+            file.read((char*)&current_bill, sizeof(current_bill));
+        } while (!file.eof());
+
+        file.close();
+        buffer.close();
+        
+        remove("bill_database.txt");
+        rename("buffer_file.txt", "bill_database.txt");
+        
+        return 0;
+    }
+
     static bool bill_exists(string billNumber)
     {
         ifstream file;
@@ -111,32 +178,7 @@ public:
         file.close();
         return false;
     }
-    static int find_user_id(string billNumber)
-    {
-        ifstream file;
-        file.open("bill_database.txt", ios::in);
-        if(!file)
-        {
-            cout << "File error" << endl;
-            return 0;
-        }
-        
-        Bill current_bill;
-
-        file.read((char*)&current_bill, sizeof(current_bill));
-        do
-        {
-            if (current_bill.get_billNumber() == billNumber)
-            {
-                file.close();
-                return current_bill.get_userId();
-            }
-            file.read((char*)&current_bill, sizeof(current_bill));
-        } while (!file.eof());
-        file.close();
-        return false;
-    }
-
+    
     static string find_bill_number(int userId)
     {
         ifstream file;
