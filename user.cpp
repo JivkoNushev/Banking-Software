@@ -5,8 +5,8 @@
 #include "transaction.h"
 #include "hash.h"
 
-User::User(){}
-User::User(string userName, string password, int userId): userName(userName), password(password), userId(userId){}
+User::User() {}
+User::User(string userName, string password, int userId) : userName(userName), password(password), userId(userId) {}
 
 void User::set_name(string name) { userName = name; }
 void User::set_password(string newPassword) { password = newPassword; }
@@ -18,23 +18,36 @@ int User::get_id() { return userId; }
 
 void User::add_user()
 {
-    ofstream file;
-    file.open("user_database.txt", ios::app);
-    if(!file)
+    ofstream user_file;
+    user_file.open("user_database.txt", ios::app);
+    if (!user_file)
     {
         cout << "File error" << endl;
         return;
     }
 
-    file.write((char*)this, sizeof(*this));
-    file.close();
+    ofstream bill_file;
+    bill_file.open("bill_database.txt", ios::in);
+    if(!bill_file)
+    {
+        cout << "File error" << endl;
+        return;
+    }
+
+    user_file.write((char *)this, sizeof(*this));
+
+    Bill new_bill(Bill::find_bill_number(userId),userId,0);
+    bill_file.write((char *)&new_bill, sizeof(new_bill));
+
+    user_file.close();
+    bill_file.close();
 }
 
 bool User::username_exists(string username)
 {
     ifstream file;
     file.open("user_database.txt", ios::in);
-    if(!file)
+    if (!file)
     {
         cout << "File error" << endl;
         return false;
@@ -42,9 +55,10 @@ bool User::username_exists(string username)
 
     User currentUser;
 
-    if(file.peek() == std::ifstream::traits_type::eof()) return false;
+    if (file.peek() == std::ifstream::traits_type::eof())
+        return false;
 
-    file.read((char*)&currentUser, sizeof(currentUser));
+    file.read((char *)&currentUser, sizeof(currentUser));
     do
     {
         if (currentUser.get_name() == username)
@@ -52,7 +66,7 @@ bool User::username_exists(string username)
             file.close();
             return true;
         }
-        file.read((char*)&currentUser, sizeof(currentUser));
+        file.read((char *)&currentUser, sizeof(currentUser));
     } while (!file.eof());
     file.close();
     return false;
@@ -62,7 +76,7 @@ bool User::user_exists(string username, string password)
 {
     ifstream file;
     file.open("user_database.txt", ios::in);
-    if(!file)
+    if (!file)
     {
         cout << "File error" << endl;
         return false;
@@ -70,7 +84,7 @@ bool User::user_exists(string username, string password)
 
     User currentUser;
 
-    file.read((char*)&currentUser, sizeof(currentUser));
+    file.read((char *)&currentUser, sizeof(currentUser));
     do
     {
         if (currentUser.get_name() == username && currentUser.get_password() == hash_string(password))
@@ -78,7 +92,7 @@ bool User::user_exists(string username, string password)
             file.close();
             return true;
         }
-        file.read((char*)&currentUser, sizeof(currentUser));
+        file.read((char *)&currentUser, sizeof(currentUser));
     } while (!file.eof());
     file.close();
     return false;
@@ -88,7 +102,7 @@ string User::user_userName(int userId)
 {
     ifstream file;
     file.open("user_database.txt", ios::in);
-    if(!file)
+    if (!file)
     {
         cout << "File error" << endl;
         return 0;
@@ -96,7 +110,7 @@ string User::user_userName(int userId)
 
     User currentUser;
 
-    file.read((char*)&currentUser, sizeof(currentUser));
+    file.read((char *)&currentUser, sizeof(currentUser));
     do
     {
         if (currentUser.get_id() == userId)
@@ -104,8 +118,8 @@ string User::user_userName(int userId)
             file.close();
             return currentUser.get_name();
         }
-        file.read((char*)&currentUser, sizeof(currentUser));
-    } while (!file.eof());        
+        file.read((char *)&currentUser, sizeof(currentUser));
+    } while (!file.eof());
     file.close();
     return 0;
 }
@@ -114,7 +128,7 @@ string User::user_password(int userId)
 {
     ifstream file;
     file.open("user_database.txt", ios::in);
-    if(!file)
+    if (!file)
     {
         cout << "File error" << endl;
         return 0;
@@ -122,7 +136,7 @@ string User::user_password(int userId)
 
     User currentUser;
 
-    file.read((char*)&currentUser, sizeof(currentUser));
+    file.read((char *)&currentUser, sizeof(currentUser));
     do
     {
         if (currentUser.get_id() == userId)
@@ -130,8 +144,8 @@ string User::user_password(int userId)
             file.close();
             return currentUser.get_password();
         }
-        file.read((char*)&currentUser, sizeof(currentUser));
-    } while (!file.eof());        
+        file.read((char *)&currentUser, sizeof(currentUser));
+    } while (!file.eof());
     file.close();
     return 0;
 }
@@ -142,7 +156,8 @@ int User::generate_id(string username)
     int hashValue = 0;
     long pPow = 1;
     const int n = username.length();
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i)
+    {
         hashValue = (hashValue + (username[i] - 'a' + 1) * pPow) % m;
         pPow = (pPow * p) % m;
     }
@@ -153,7 +168,7 @@ int User::user_id(string username)
 {
     ifstream file;
     file.open("user_database.txt", ios::in);
-    if(!file)
+    if (!file)
     {
         cout << "File error" << endl;
         return 0;
@@ -161,7 +176,7 @@ int User::user_id(string username)
 
     User currentUser;
 
-    file.read((char*)&currentUser, sizeof(currentUser));
+    file.read((char *)&currentUser, sizeof(currentUser));
     do
     {
         if (currentUser.get_name() == username)
@@ -169,8 +184,8 @@ int User::user_id(string username)
             file.close();
             return currentUser.get_id();
         }
-        file.read((char*)&currentUser, sizeof(currentUser));
-    } while (!file.eof());        
+        file.read((char *)&currentUser, sizeof(currentUser));
+    } while (!file.eof());
     file.close();
     return 0;
 }
@@ -181,12 +196,12 @@ bool User::withdraw()
     cout << "Enter withdraw amount: ";
     cin >> amount;
 
-    if(amount < 0 || currBalance < amount)
+    if (amount < 0 || currBalance < amount)
     {
         cout << "\nCan't withdraw that amount\n";
         return false;
     }
-    
+
     Bill::change_balance(userId, currBalance - amount);
     return true;
 }
@@ -197,7 +212,7 @@ bool User::deposit()
     cout << "Enter deposit amount: ";
     cin >> amount;
 
-    if(amount < 0)
+    if (amount < 0)
     {
         cout << "\nCan't deposit that amount\n";
         return false;
@@ -216,27 +231,27 @@ bool User::transfer()
     cin >> transferAmount;
     cout << "Enter bill number: ";
     cin >> billNumberTo;
-    
-    if(transferAmount < 0 || Bill::bill_exists(billNumberTo))
+
+    if (transferAmount < 0 || Bill::bill_exists(billNumberTo))
     {
         cout << "\nCan't transfer that amount to that billNumber\n";
         return false;
     }
-    
+
     string billNumberFrom = Bill::find_bill_number(this->get_id());
     string operationCode = "transfer";
-    Transaction newTransaction(operationCode,billNumberFrom,billNumberTo,transferAmount);
+    Transaction newTransaction(operationCode, billNumberFrom, billNumberTo, transferAmount);
 
     ofstream file;
     file.open("transactions.txt", ios::app);
-    if(!file)
+    if (!file)
     {
         cout << "File error" << endl;
         return false;
     }
 
-    file.write((char*)&newTransaction, sizeof(newTransaction));
+    file.write((char *)&newTransaction, sizeof(newTransaction));
     file.close();
 
     return true;
-} 
+}
