@@ -1,3 +1,6 @@
+#include <fstream>
+#include <iostream>
+
 #include "menu.h"
 #include "user.h"
 #include "transaction.h"
@@ -106,7 +109,7 @@ int print_home_menu()
 // :-
 //////TODO: nikude ne se generira billNumber
 //
-void menu(User &user)
+void print_menu(User &user)
 {
     system("cls");
     uint8_t input = -1;

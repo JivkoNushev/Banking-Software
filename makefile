@@ -1,5 +1,5 @@
-FILES = main.o menu.o
-CFLAGS = -Wall -pedantic -std=c11
+FILES = main.o menu.o user.o bill.o transaction.o hash.o 
+CFLAGS = -Wall -pedantic
 
 all: ${FILES}
 	g++ -Wall ${FILES} -o main.out
@@ -16,3 +16,5 @@ open:
 OPEN:
 	gedit main.cpp
 
+run:
+	./main.out

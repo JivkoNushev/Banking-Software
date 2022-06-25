@@ -1,7 +1,7 @@
-#include <fstream>
-#include <iostream>
+#ifndef USER
+#define USER
+
 #include <string>
-#include "bill.h"
 using namespace std;
 
 class User
@@ -9,8 +9,9 @@ class User
     string userName, password;
     int userId;
 public:
+    User();
     User(string userName, string password, int userId);
-
+    
     void set_name(string name);
     void set_password(string newPassword);
     void set_id(int newId);
@@ -19,15 +20,19 @@ public:
     string get_password();
     int get_id();
 
-    string add_user();
-
-    static bool user_exists(string username, string password);
-
-    static int user_id(string username);
+    void add_user();
 
     static bool username_exists(string username);
 
+    static bool user_exists(string username, string password);
+
+    static string user_userName(int userId);
+
+    static string user_password(int userId);
+
     static int generate_id(string username);
+
+    static int user_id(string username);
 
     bool withdraw();
 
@@ -35,3 +40,5 @@ public:
 
     bool transfer();
 };
+
+#endif

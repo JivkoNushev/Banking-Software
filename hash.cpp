@@ -5,7 +5,6 @@
 
 //currently c code
 
-
 /*PRINT*/
 void print_binary_number(int n)
 {
@@ -29,11 +28,12 @@ void print(char* input, int size)
 
 string hash_string(string input)
 {
-    char* input_string = "abc";
+    char input1[] = "abc";
+    char *input_string = input1;
     int input_len = strlen(input_string),
         blocks = input_len/64;
 
-    char *block = malloc(64);
+    char *block = (char*)malloc(64);
     if (!block) return 0;
     memset(block, 0, 64);
     char null = 128;

@@ -1,5 +1,6 @@
-#include <fstream>
-#include <iostream>
+#ifndef TRANSACTION
+#define TRANSACTION
+
 #include <string>
 using namespace std;
 
@@ -21,5 +22,7 @@ public:
     string get_billNumberTo();
     float get_transferAmount();
 
-    static void process_transactions();
+    static bool process_transactions();
 };
+
+#endif
