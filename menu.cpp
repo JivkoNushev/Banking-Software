@@ -72,7 +72,7 @@ int signup_menu()
         cout << "|               Sign up                   |\n";
         cout << "Enter username: ";
         cin >> username;
-        cout << "Enter password";
+        cout << "Enter password: ";
         cin >> password;
     } while(User::username_exists(username));
     User user(username, password, User::generate_id(username));
@@ -111,7 +111,7 @@ int print_home_menu()
 void print_menu(User &user)
 {
     system("cls");
-    uint8_t input = -1;
+    int input = -1;
     
     while(1)
     {
