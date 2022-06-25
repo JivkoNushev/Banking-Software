@@ -1,63 +1,78 @@
-#include "hash.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+#include <string>
+#include <stdint-gcc.h>
 #include <string.h>
+#include <byteswap.h>
+#include "hash.h"
+using namespace std;
 
-//currently c code
-
-/*PRINT*/
-void print_binary_number(int n)
+void print_binary_number(uint8_t n)
 {
-    for (int c = 7; c >= 0; c--)
+    for (int i = 0; i < 8; i++)
     {
-        if (n >> c & 1)
-            printf("1");
+        if (n & 1)
+            cout << 1;
         else
-            printf("0");
+            cout << 0;
+        n>>=1;
     }
-    printf("-");
+    cout << "-";
 }
-void print(char* input, int size)
+void print_binary_number(uint64_t n)
+{
+    for (int i = 0; i < 64; i++)
+    {
+        if (n & 1)
+            cout << 1;
+        else
+            cout << 0;
+        n>>=1;
+    }
+    cout << "-";
+}
+void print(uint8_t *input, int size)
 {
     for (int i = 0; i < size; i++)
     {
         print_binary_number(*input);
         input++;
     }
+    cout << endl;
 }
 
-string hash_string(string input)
+//TODO: little and big endian
+int main()
 {
-    char input1[] = "abc";
-    char *input_string = input1;
-    int input_len = strlen(input_string),
-        blocks = input_len/64;
+    char *input = "abc";
 
-    char *block = (char*)malloc(64);
-    if (!block) return 0;
-    memset(block, 0, 64);
-    char null = 128;
+    uint64_t length = strlen(input);
+    int curr_block_length = 0;
 
-    for (int i = 0; i <= blocks; i++)
+    // 512 bits(64 bytes) blocks
+    // 448 bits(56 bytes) of info and 64(8 bytes) for length of message
+    cout << "Lenth: " << length << endl;
+    if (length < 56)
     {
-        if(input_len>=56)
-            memcpy(block, input_string, 56);
-        else
-        {
-            memcpy(block, input_string, input_len);
-            memcpy(block+input_len, &null, sizeof(null));
-        }
-        unsigned long long len = 1;
+        uint8_t block[64] = {0};
+        for (int i = 0; i < length; i++)
+            block[i] = input[i];
 
-        memcpy(block + 56, &len, 8);
+        curr_block_length += length;
+        print(block, curr_block_length);
 
-        print(block,64);
+        // add 1 and padd with 0s until 56 bytes
+        block[curr_block_length] = 128;
+        curr_block_length++;
+        print(block, curr_block_length);
 
-        //hash
-       
-        input_string += 64;
-        input_len -= 64;
+        curr_block_length = 56;
+        print(block, curr_block_length);
 
-        memset(block, 0, 64);
+        // after that add 8 bytes of length of bits
+
+        block[curr_block_length] = length * 8;
+        curr_block_length = 64;
+        print_binary_number(length * 8);
+        // print(block, curr_block_length);
     }
 }
