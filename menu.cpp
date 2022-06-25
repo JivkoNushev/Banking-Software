@@ -97,7 +97,7 @@ int print_home_menu()
             case 3:
                 system("cls");
                 cout << "Exited from the bank";
-                return 0;
+                return -1;
             default:
                 break;
         }
