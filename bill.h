@@ -1,7 +1,8 @@
 #ifndef BILL
 #define BILL
 #include <string>
-
+#include "user.h"
+#include <fstream>
 using namespace std;
 
 class Bill
