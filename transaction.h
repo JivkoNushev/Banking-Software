@@ -1,6 +1,6 @@
 #ifndef TRANSACTION
 #define TRANSACTION
-
+#include <fstream>
 #include <string>
 using namespace std;
 
