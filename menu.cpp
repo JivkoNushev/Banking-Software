@@ -55,9 +55,12 @@ int signin_menu()
     getline(cin, username);
     cout << "Enter password: ";
     getline(cin, password);
+
+    password = hash_string(password);
     if (!User::user_exists(username, password))
     {
         cout << "User doesn't exist!" << endl;
+        sleep(2);
         return 0;
     }
 
@@ -75,12 +78,15 @@ int signup_menu()
     getline(cin, username);
     cout << "Enter password: ";
     getline(cin, password);
+
     password = hash_string(password);
     if (User::username_exists(username))
     {
         cout << "Username exists!" << endl;
+        sleep(2);
         return 0;
     }
+    
     User user(username, password, User::generate_id(username));
     user.add_user();
 
@@ -140,9 +146,6 @@ int print_home_menu()
     }
 }
 
-// :-
-//////TODO: nikude ne se generira billNumber
-//
 void print_menu(User &user)
 {
     string input;

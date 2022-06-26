@@ -24,3 +24,8 @@ trash:
 	touch user_database.txt
 	rm bill_database.txt
 	touch bill_database.txt
+
+new:
+	make trash
+	make all
+	make run

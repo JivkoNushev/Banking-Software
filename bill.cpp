@@ -19,7 +19,7 @@ ostream &operator<<(ostream &os, Bill &bill)
 {
     os << bill.billNumber << endl
        << bill.userId << endl
-       << bill.balance << endl;
+       << bill.balance;
     return os;
 }
 istream &operator>>(istream &is, Bill &bill)

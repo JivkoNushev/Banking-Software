@@ -9,10 +9,11 @@ unsigned int hash_to_uint(string input)
         hash ^= input[i];
         hash *= random;
     }
-    return hash;    
+    return hash;
 }
 string hash_string(string input)
 {
+    // return input;
     unsigned int hashed = hash_to_uint(input);
     return to_string(hashed);
 }

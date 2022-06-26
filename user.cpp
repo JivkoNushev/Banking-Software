@@ -20,7 +20,7 @@ ostream &operator<<(ostream &os, User &user)
 {
     os << user.userName << endl
        << user.password << endl
-       << user.userId << endl;
+       << user.userId;
     return os;
 }
 istream &operator>>(istream &is, User &user)
@@ -100,7 +100,7 @@ bool User::user_exists(string username, string password)
     file >> currentUser;
     do
     {
-        if (currentUser.get_name() == username && currentUser.get_password() == hash_string(password))
+        if (currentUser.get_name() == username && currentUser.get_password() == password)
         {
             file.close();
             return true;
