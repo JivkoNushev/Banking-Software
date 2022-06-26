@@ -9,6 +9,7 @@ class Bill
     string billNumber;
     int userId;
     float balance;
+
 public:
     Bill();
     Bill(string billNumber, int userId, float balance);
@@ -21,6 +22,9 @@ public:
     int get_userId();
     float get_balance();
 
+    friend ostream &operator<<(ostream &os, User &user);
+    friend istream &operator>>(istream &is, User &user);
+
     static float find_balance(int userId);
 
     static float find_balance(string billNumber);
@@ -30,7 +34,7 @@ public:
     static bool change_balance(string billNumber, float newBalance);
 
     static bool bill_exists(string billNumber);
-    
+
     static string find_bill_number(int userId);
 
     static int find_user_id(string billNumber);

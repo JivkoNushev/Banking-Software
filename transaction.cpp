@@ -4,7 +4,7 @@
 #include "bill.h"
 
 Transaction::Transaction() {}
-Transaction::Transaction(string operationCode, string billNumberFrom, string billNumberTo, float transferAmount) : operationCode(operationCode), billNumberFrom(billNumberFrom), billNumberTo(billNumberTo), transferAmount(transferAmount){}
+Transaction::Transaction(string operationCode, string billNumberFrom, string billNumberTo, float transferAmount) : operationCode(operationCode), billNumberFrom(billNumberFrom), billNumberTo(billNumberTo), transferAmount(transferAmount) {}
 
 void Transaction::set_operationCode(string newOperationCode) { operationCode = newOperationCode; }
 void Transaction::set_billNumberFrom(string newBillNumberFrom) { billNumberFrom = newBillNumberFrom; }
@@ -15,6 +15,20 @@ string Transaction::get_operationCode() { return operationCode; }
 string Transaction::get_billNumberFrom() { return billNumberFrom; }
 string Transaction::get_billNumberTo() { return billNumberTo; }
 float Transaction::get_transferAmount() { return transferAmount; }
+
+ostream &operator<<(ostream &os, Transaction &transaction)
+{
+    os << transaction.operationCode << endl
+       << transaction.billNumberFrom << endl
+       << transaction.billNumberTo << endl
+       << transaction.transferAmount;
+    return os;
+}
+istream &operator>>(istream &is, Transaction &transaction)
+{
+    is >> transaction.operationCode >> transaction.billNumberFrom >> transaction.billNumberTo >> transaction.transferAmount;
+    return is;
+}
 
 bool Transaction::process_transactions()
 {
@@ -27,8 +41,7 @@ bool Transaction::process_transactions()
     }
 
     Transaction currentTransaction;
-
-    file.read((char *)&currentTransaction, sizeof(currentTransaction));
+    file >> currentTransaction;
     do
     {
         if (!Bill::bill_exists(currentTransaction.billNumberFrom) || !Bill::bill_exists(currentTransaction.billNumberFrom))
@@ -36,8 +49,6 @@ bool Transaction::process_transactions()
             cout << "Invalid bill number!" << endl;
             return false;
         }
-
-        // get current balance
         float balanceFrom = Bill::find_balance(currentTransaction.billNumberFrom);
         float balanceTo = Bill::find_balance(currentTransaction.billNumberTo);
         // check if enough money From
@@ -53,13 +64,14 @@ bool Transaction::process_transactions()
         Bill::change_balance(currentTransaction.billNumberTo, balanceTo + currentTransaction.transferAmount);
 
         // read next
-        file.read((char *)&currentTransaction, sizeof(currentTransaction));
-    } while (!file.eof());
+        file >> currentTransaction;
+    } while (file.good());
+
     file.close();
 
-    //delete processed transactions 
+    // delete processed transactions
     ofstream f("transactions.txt");
     f.close();
-    
+
     return true;
 }

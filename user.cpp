@@ -16,6 +16,19 @@ string User::get_name() { return userName; }
 string User::get_password() { return password; }
 int User::get_id() { return userId; }
 
+ostream &operator<<(ostream &os, User &user)
+{
+    os << user.userName << endl
+       << user.password << endl
+       << user.userId;
+    return os;
+}
+istream &operator>>(istream &is, User &user)
+{
+    is >> user.userName >> user.password >> user.userId;
+    return is;
+}
+
 void User::add_user()
 {
     ofstream user_file;
@@ -33,11 +46,10 @@ void User::add_user()
         cout << "File error" << endl;
         return;
     }
-    user_file.write((char *)this, sizeof(*this));
-
+    user_file << this; //?
     Bill new_bill(Bill::create_bill_number(userId), userId, 0);
-    bill_file.write((char *)&new_bill, sizeof(new_bill));
-
+    user_file << new_bill;
+    
     user_file.close();
     bill_file.close();
     cout << "User added!" << endl;
@@ -58,7 +70,7 @@ bool User::username_exists(string username)
     if (file.peek() == std::ifstream::traits_type::eof())
         return false;
 
-    file.read((char *)&currentUser, sizeof(currentUser));
+    file >> currentUser;
     do
     {
         if (currentUser.get_name() == username)
@@ -66,8 +78,9 @@ bool User::username_exists(string username)
             file.close();
             return true;
         }
-        file.read((char *)&currentUser, sizeof(currentUser));
-    } while (!file.eof());
+        file >> currentUser;
+    } while (file.good());
+
     file.close();
     return false;
 }
@@ -84,7 +97,7 @@ bool User::user_exists(string username, string password)
 
     User currentUser;
 
-    file.read((char *)&currentUser, sizeof(currentUser));
+    file >> currentUser;
     do
     {
         if (currentUser.get_name() == username && currentUser.get_password() == hash_string(password))
@@ -92,8 +105,8 @@ bool User::user_exists(string username, string password)
             file.close();
             return true;
         }
-        file.read((char *)&currentUser, sizeof(currentUser));
-    } while (!file.eof());
+        file >> currentUser;
+    } while (file.good());
     file.close();
     return false;
 }
@@ -110,7 +123,7 @@ string User::user_userName(int userId)
 
     User currentUser;
 
-    file.read((char *)&currentUser, sizeof(currentUser));
+    file >> currentUser;
     do
     {
         if (currentUser.get_id() == userId)
@@ -118,8 +131,9 @@ string User::user_userName(int userId)
             file.close();
             return currentUser.get_name();
         }
-        file.read((char *)&currentUser, sizeof(currentUser));
-    } while (!file.eof());
+        file >> currentUser;
+    } while (file.good());
+
     file.close();
     return 0;
 }
@@ -136,7 +150,7 @@ string User::user_password(int userId)
 
     User currentUser;
 
-    file.read((char *)&currentUser, sizeof(currentUser));
+    file >> currentUser;
     do
     {
         if (currentUser.get_id() == userId)
@@ -144,8 +158,9 @@ string User::user_password(int userId)
             file.close();
             return currentUser.get_password();
         }
-        file.read((char *)&currentUser, sizeof(currentUser));
-    } while (!file.eof());
+        file >> currentUser;
+    } while (file.good());
+
     file.close();
     return 0;
 }
@@ -175,8 +190,7 @@ int User::user_id(string username)
     }
 
     User currentUser;
-
-    file.read((char *)&currentUser, sizeof(currentUser));
+    file >> currentUser;
     do
     {
         if (currentUser.get_name() == username)
@@ -184,8 +198,9 @@ int User::user_id(string username)
             file.close();
             return currentUser.get_id();
         }
-        file.read((char *)&currentUser, sizeof(currentUser));
-    } while (!file.eof());
+        file >> currentUser;
+    } while (file.good());
+
     file.close();
     return 0;
 }
@@ -249,8 +264,7 @@ bool User::transfer()
         cout << "File error" << endl;
         return false;
     }
-
-    file.write((char *)&newTransaction, sizeof(newTransaction));
+    file << newTransaction;
     file.close();
 
     return true;

@@ -8,10 +8,11 @@ class User
 {
     string userName, password;
     int userId;
+
 public:
     User();
     User(string userName, string password, int userId);
-    
+
     void set_name(string name);
     void set_password(string newPassword);
     void set_id(int newId);
@@ -19,6 +20,9 @@ public:
     string get_name();
     string get_password();
     int get_id();
+
+    friend ostream &operator<<(ostream &os, User &user);
+    friend istream &operator>>(istream &is, User &user);
 
     void add_user();
 

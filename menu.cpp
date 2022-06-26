@@ -139,7 +139,6 @@ void print_menu(User &user)
     
     while(1)
     {
-        
         do
         {
             system("clear");

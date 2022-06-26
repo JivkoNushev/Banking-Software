@@ -8,6 +8,7 @@ class Transaction
 {
     string operationCode, billNumberFrom, billNumberTo;
     float transferAmount;
+
 public:
     Transaction();
     Transaction(string operationCode, string billNumberFrom, string billNumberTo, float transferAmount);
@@ -21,6 +22,9 @@ public:
     string get_billNumberFrom();
     string get_billNumberTo();
     float get_transferAmount();
+
+    friend ostream &operator<<(ostream &os, Transaction &transaction);
+    friend istream &operator>>(istream &is, Transaction &transaction);
 
     static bool process_transactions();
 };
