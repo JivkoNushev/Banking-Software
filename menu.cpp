@@ -85,7 +85,7 @@ int signup_menu()
     return user.get_id();
 }
 
-bool isNumber(const string& s)
+bool is_number(const string& s)
 {
     for (char const &ch : s) {
         if (std::isdigit(ch) == 0)
@@ -108,7 +108,7 @@ int print_home_menu()
             getline(cin, input);
             ss << input;
             ss >> input;
-            if(!isNumber(input))
+            if(!is_number(input))
                 continue;
             input_to_int = stoi(input);
         }while(input_to_int < 1 && input_to_int > 3);
@@ -151,7 +151,7 @@ void print_menu(User &user)
             getline(cin, input);
             ss << input;
             ss >> input;
-            if(!isNumber(input))
+            if(!is_number(input))
                 continue;
             input_to_int = stoi(input);
         }while(input_to_int < 1 && input_to_int > 5);
@@ -163,13 +163,22 @@ void print_menu(User &user)
         switch(input_to_int)
         {
             case 1:
-                user.withdraw();
+                if(user.withdraw())
+                    cout << "Withdraw successful!" << endl;
+                else
+                    cout << "Withdraw failed!" << endl;
                 break;
             case 2:
-                user.deposit();
+                if(user.deposit())
+                    cout << "Deposit successful!" << endl;
+                else
+                    cout << "Deposit failed!" << endl;
                 break;
             case 3:
-                user.transfer();
+                if(user.transfer())
+                    cout << "Transfer successful!" << endl;
+                else
+                    cout << "Transfer failed!" << endl;
                 break;
             case 4:
                 Transaction::process_transactions();
