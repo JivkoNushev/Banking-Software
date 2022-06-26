@@ -21,7 +21,7 @@ ostream &operator<<(ostream &os, Transaction &transaction)
     os << transaction.operationCode << endl
        << transaction.billNumberFrom << endl
        << transaction.billNumberTo << endl
-       << transaction.transferAmount;
+       << transaction.transferAmount << endl;
     return os;
 }
 istream &operator>>(istream &is, Transaction &transaction)
