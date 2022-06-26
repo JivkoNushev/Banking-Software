@@ -99,9 +99,11 @@ int print_home_menu()
     string input;
     stringstream ss;
     int input_to_int;
+
     while(1)
     {
-        /*do
+        /*
+        do
         {
             system("clear");
             home_menu(1);
@@ -116,6 +118,8 @@ int print_home_menu()
         system("clear");
         home_menu(1);
         cin >> input_to_int;
+        getline(cin, input);
+
         switch(input_to_int)
         {
             case 1:

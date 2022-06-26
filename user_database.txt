@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 Jivko
 123
 14201915
-=======
-a
-a
-1
->>>>>>> 31f04f0675fdafb13663bb9c27ecad6fac8b8563
+Milena
+Krumova
+41719192
