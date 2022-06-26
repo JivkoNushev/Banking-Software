@@ -114,7 +114,7 @@ int print_home_menu()
         }while(input_to_int < 1 && input_to_int > 3);
         */
         system("clear");
-        home_menu(2);
+        home_menu(1);
         cin >> input_to_int;
         switch(input_to_int)
         {
