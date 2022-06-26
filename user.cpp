@@ -31,35 +31,35 @@ istream &operator>>(istream &is, User &user)
 
 void User::add_user()
 {
-    ofstream user_file;
-    user_file.open("user_database.txt", ios::app);
-    if (!user_file)
+    ofstream userFile;
+    userFile.open("user_database.txt", ios::app);
+    if (!userFile)
     {
         cout << "File error" << endl;
         return;
     }
 
-    ofstream bill_file;
-    bill_file.open("bill_database.txt", ios::app);
-    if (!bill_file)
+    ofstream billFile;
+    billFile.open("bill_database.txt", ios::app);
+    if (!billFile)
     {
         cout << "File error" << endl;
         return;
     }
-    user_file << *this << "\n";
-    Bill new_bill(Bill::create_bill_number(userId), userId, 0);
-    bill_file << new_bill << "\n";
+    userFile << *this << "\n";
+    Bill newBill(Bill::create_bill_number(userId), userId, 0);
+    billFile << newBill << "\n";
 
-    user_file.close();
-    bill_file.close();
+    userFile.close();
+    billFile.close();
     cout << "User added!" << endl;
 }
 
 bool User::username_exists(string username)
 {
-    ifstream file;
-    file.open("user_database.txt", ios::in);
-    if (!file)
+    ifstream userFile;
+    userFile.open("user_database.txt", ios::in);
+    if (!userFile)
     {
         cout << "File error" << endl;
         return 0;
@@ -67,29 +67,29 @@ bool User::username_exists(string username)
 
     User currentUser;
 
-    if (file.peek() == std::ifstream::traits_type::eof())
+    if (userFile.peek() == std::ifstream::traits_type::eof())
         return false;
 
-    file >> currentUser;
+    userFile >> currentUser;
     do
     {
         if (currentUser.get_name() == username)
         {
-            file.close();
+            userFile.close();
             return true;
         }
-        file >> currentUser;
-    } while (file.good());
+        userFile >> currentUser;
+    } while (userFile.good());
 
-    file.close();
+    userFile.close();
     return false;
 }
 
 bool User::user_exists(string username, string password)
 {
-    ifstream file;
-    file.open("user_database.txt", ios::in);
-    if (!file)
+    ifstream userFile;
+    userFile.open("user_database.txt", ios::in);
+    if (!userFile)
     {
         cout << "File error" << endl;
         return false;
@@ -97,25 +97,25 @@ bool User::user_exists(string username, string password)
 
     User currentUser;
 
-    file >> currentUser;
+    userFile >> currentUser;
     do
     {
         if (currentUser.get_name() == username && currentUser.get_password() == password)
         {
-            file.close();
+            userFile.close();
             return true;
         }
-        file >> currentUser;
-    } while (file.good());
-    file.close();
+        userFile >> currentUser;
+    } while (userFile.good());
+    userFile.close();
     return false;
 }
 
 string User::user_userName(int userId)
 {
-    ifstream file;
-    file.open("user_database.txt", ios::in);
-    if (!file)
+    ifstream userFile;
+    userFile.open("user_database.txt", ios::in);
+    if (!userFile)
     {
         cout << "File error" << endl;
         return 0;
@@ -123,26 +123,26 @@ string User::user_userName(int userId)
 
     User currentUser;
 
-    file >> currentUser;
+    userFile >> currentUser;
     do
     {
         if (currentUser.get_id() == userId)
         {
-            file.close();
+            userFile.close();
             return currentUser.get_name();
         }
-        file >> currentUser;
-    } while (file.good());
+        userFile >> currentUser;
+    } while (userFile.good());
 
-    file.close();
+    userFile.close();
     return 0;
 }
 
 string User::user_password(int userId)
 {
-    ifstream file;
-    file.open("user_database.txt", ios::in);
-    if (!file)
+    ifstream userFile;
+    userFile.open("user_database.txt", ios::in);
+    if (!userFile)
     {
         cout << "File error" << endl;
         return 0;
@@ -150,18 +150,18 @@ string User::user_password(int userId)
 
     User currentUser;
 
-    file >> currentUser;
+    userFile >> currentUser;
     do
     {
         if (currentUser.get_id() == userId)
         {
-            file.close();
+            userFile.close();
             return currentUser.get_password();
         }
-        file >> currentUser;
-    } while (file.good());
+        userFile >> currentUser;
+    } while (userFile.good());
 
-    file.close();
+    userFile.close();
     return 0;
 }
 
@@ -181,27 +181,27 @@ int User::generate_id(string username)
 
 int User::user_id(string username)
 {
-    ifstream file;
-    file.open("user_database.txt", ios::in);
-    if (!file)
+    ifstream userFile;
+    userFile.open("user_database.txt", ios::in);
+    if (!userFile)
     {
         cout << "File error" << endl;
         return 0;
     }
 
     User currentUser;
-    file >> currentUser;
+    userFile >> currentUser;
     do
     {
         if (currentUser.get_name() == username)
         {
-            file.close();
+            userFile.close();
             return currentUser.get_id();
         }
-        file >> currentUser;
-    } while (file.good());
+        userFile >> currentUser;
+    } while (userFile.good());
 
-    file.close();
+    userFile.close();
     return 0;
 }
 
@@ -256,15 +256,15 @@ bool User::transfer()
     string operationCode = "transfer";
     Transaction newTransaction(operationCode, billNumberFrom, billNumberTo, transferAmount);
 
-    ofstream file;
-    file.open("transactions.txt", ios::app);
-    if (!file)
+    ofstream transactionFile;
+    transactionFile.open("transactions.txt", ios::app);
+    if (!transactionFile)
     {
         cout << "File error" << endl;
         return false;
     }
-    file << newTransaction;
-    file.close();
+    transactionFile << newTransaction;
+    transactionFile.close();
 
     return true;
 }

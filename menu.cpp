@@ -107,7 +107,7 @@ int print_home_menu()
 {
     string input;
     stringstream ss;
-    int input_to_int;
+    int inputToInt;
 
     while (1)
     {
@@ -126,10 +126,10 @@ int print_home_menu()
         */
         system("clear");
         home_menu(1);
-        cin >> input_to_int;
+        cin >> inputToInt;
         getline(cin, input);
 
-        switch (input_to_int)
+        switch (inputToInt)
         {
         case 1:
             return signin_menu();
@@ -150,7 +150,7 @@ void print_menu(User &user)
 {
     string input;
     stringstream ss;
-    int input_to_int;
+    int inputToInt;
 
     while (1)
     {
@@ -168,9 +168,9 @@ void print_menu(User &user)
         */
         system("clear");
         home_menu(2);
-        cin >> input_to_int;
+        cin >> inputToInt;
 
-        switch (input_to_int)
+        switch (inputToInt)
         {
         case 1:
             if (user.withdraw())

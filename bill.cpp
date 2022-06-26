@@ -30,88 +30,88 @@ istream &operator>>(istream &is, Bill &bill)
 
 float Bill::find_balance(int userId)
 {
-    ifstream file;
-    file.open("bill_database.txt", ios::in);
-    if (!file)
+    ifstream billFile;
+    billFile.open("bill_database.txt", ios::in);
+    if (!billFile)
     {
         cout << "File error" << endl;
         return 0;
     }
 
-    Bill current_bill;
-    file >> current_bill;
+    Bill currentBill;
+    billFile >> currentBill;
     do
     {
-        if (current_bill.get_userId() == userId)
+        if (currentBill.get_userId() == userId)
         {
-            file.close();
-            return current_bill.get_balance();
+            billFile.close();
+            return currentBill.get_balance();
         }
-        file >> current_bill;
-    } while (file.good());
+        billFile >> currentBill;
+    } while (billFile.good());
 
-    file.close();
+    billFile.close();
     return 0;
 }
 
 float Bill::find_balance(string billNumber)
 {
-    ifstream file;
-    file.open("bill_database.txt", ios::in);
-    if (!file)
+    ifstream billFile;
+    billFile.open("bill_database.txt", ios::in);
+    if (!billFile)
     {
         cout << "File error" << endl;
         return 0;
     }
 
-    Bill current_bill;
-    file >> current_bill;
+    Bill currentBill;
+    billFile >> currentBill;
     do
     {
-        if (current_bill.get_billNumber() == billNumber)
+        if (currentBill.get_billNumber() == billNumber)
         {
-            file.close();
-            return current_bill.get_balance();
+            billFile.close();
+            return currentBill.get_balance();
         }
-        file >> current_bill;
-    } while (file.good());
+        billFile >> currentBill;
+    } while (billFile.good());
 
-    file.close();
+    billFile.close();
     return 0;
 }
 
 bool Bill::change_balance(int userId, float newBalance)
 {
-    ifstream file;
-    ofstream buffer;
+    ifstream billFile;
+    ofstream bufferFile;
 
-    file.open("bill_database.txt", ios::in);
-    if (!file)
+    billFile.open("bill_database.txt", ios::in);
+    if (!billFile)
     {
         cout << "File error" << endl;
         return 0;
     }
 
-    buffer.open("buffer_file.txt", ios::app);
-    if (!buffer)
+    bufferFile.open("buffer_file.txt", ios::app);
+    if (!bufferFile)
     {
-        file.close();
+        billFile.close();
         cout << "File error" << endl;
         return 0;
     }
 
-    Bill current_bill;
-    file >> current_bill;
+    Bill currentBill;
+    billFile >> currentBill;
     do
     {
-        if (current_bill.get_userId() == userId)
-            current_bill.set_balance(newBalance);
-        buffer << current_bill;
-        file >> current_bill;
-    } while (file.good());
+        if (currentBill.get_userId() == userId)
+            currentBill.set_balance(newBalance);
+        bufferFile << currentBill;
+        billFile >> currentBill;
+    } while (billFile.good());
 
-    file.close();
-    buffer.close();
+    billFile.close();
+    bufferFile.close();
 
     remove("bill_database.txt");
     rename("buffer_file.txt", "bill_database.txt");
@@ -121,36 +121,36 @@ bool Bill::change_balance(int userId, float newBalance)
 
 bool Bill::change_balance(string billNumber, float newBalance)
 {
-    ifstream file;
-    ofstream buffer;
+    ifstream billFile;
+    ofstream bufferFile;
 
-    file.open("bill_database.txt", ios::in);
-    if (!file)
+    billFile.open("bill_database.txt", ios::in);
+    if (!billFile)
     {
         cout << "File error" << endl;
         return 0;
     }
 
-    buffer.open("buffer_file.txt", ios::app);
-    if (!buffer)
+    bufferFile.open("buffer_file.txt", ios::app);
+    if (!bufferFile)
     {
-        file.close();
+        billFile.close();
         cout << "File error" << endl;
         return 0;
     }
     
-    Bill current_bill;
-    file >> current_bill;
+    Bill currentBill;
+    billFile >> currentBill;
     do
     {
-        if (current_bill.get_billNumber() == billNumber)
-            current_bill.set_balance(newBalance);
-        buffer << current_bill;
-        file >> current_bill;
-    } while (file.good());
+        if (currentBill.get_billNumber() == billNumber)
+            currentBill.set_balance(newBalance);
+        bufferFile << currentBill;
+        billFile >> currentBill;
+    } while (billFile.good());
 
-    file.close();
-    buffer.close();
+    billFile.close();
+    bufferFile.close();
 
     remove("bill_database.txt");
     rename("buffer_file.txt", "bill_database.txt");
@@ -160,79 +160,79 @@ bool Bill::change_balance(string billNumber, float newBalance)
 
 bool Bill::bill_exists(string billNumber)
 {
-    ifstream file;
-    file.open("bill_database.txt", ios::in);
-    if (!file)
+    ifstream billFile;
+    billFile.open("bill_database.txt", ios::in);
+    if (!billFile)
     {
         cout << "File error" << endl;
         return 0;
     }
 
-    Bill current_bill;
-    file >> current_bill;
+    Bill currentBill;
+    billFile >> currentBill;
     do
     {
-        if (current_bill.get_billNumber() == billNumber)
+        if (currentBill.get_billNumber() == billNumber)
         {
-            file.close();
+            billFile.close();
             return true;
         }
-        file >> current_bill;
-    } while (file.good());
+        billFile >> currentBill;
+    } while (billFile.good());
 
-    file.close();
+    billFile.close();
     return false;
 }
 
 string Bill::find_bill_number(int userId)
 {
-    ifstream file;
-    file.open("bill_database.txt", ios::in);
-    if (!file)
+    ifstream billFile;
+    billFile.open("bill_database.txt", ios::in);
+    if (!billFile)
     {
         cout << "File error" << endl;
         return 0;
     }
 
-    Bill current_bill;
-    file >> current_bill;
+    Bill currentBill;
+    billFile >> currentBill;
     do
     {
-        if (current_bill.get_userId() == userId)
+        if (currentBill.get_userId() == userId)
         {
-            file.close();
-            return current_bill.get_billNumber();
+            billFile.close();
+            return currentBill.get_billNumber();
         }
-        file >> current_bill;
-    } while (file.good());
+        billFile >> currentBill;
+    } while (billFile.good());
 
-    file.close();
+    billFile.close();
     return 0;
 }
 
 int Bill::find_user_id(string billNumber)
 {
-    ifstream file;
-    file.open("bill_database.txt", ios::in);
-    if (!file)
+    ifstream billFile;
+    billFile.open("bill_database.txt", ios::in);
+    if (!billFile)
     {
         cout << "File error" << endl;
         return 0;
     }
 
-    Bill current_bill;
-    file >> current_bill;
+    Bill currentBill;
+    billFile >> currentBill;
     do
     {
-        if (current_bill.get_billNumber() == billNumber)
+        if (currentBill.get_billNumber() == billNumber)
         {
-            file.close();
-            return current_bill.get_userId();
+            billFile.close();
+            return currentBill.get_userId();
         }
-        file >> current_bill;
-    } while (file.good());
+        billFile >> currentBill;
+    } while (billFile.good());
 
-    file.close();
+    billFile.close();
     return 0;
 }
 

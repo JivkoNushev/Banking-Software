@@ -32,16 +32,16 @@ istream &operator>>(istream &is, Transaction &transaction)
 
 bool Transaction::process_transactions()
 {
-    ifstream file;
-    file.open("transactions.txt", ios::in);
-    if (!file)
+    ifstream transactionFile;
+    transactionFile.open("transactions.txt", ios::in);
+    if (!transactionFile)
     {
         cout << "File error" << endl;
         return false;
     }
 
     Transaction currentTransaction;
-    file >> currentTransaction;
+    transactionFile >> currentTransaction;
     do
     {
         if (!Bill::bill_exists(currentTransaction.billNumberFrom) || !Bill::bill_exists(currentTransaction.billNumberFrom))
@@ -64,14 +64,13 @@ bool Transaction::process_transactions()
         Bill::change_balance(currentTransaction.billNumberTo, balanceTo + currentTransaction.transferAmount);
 
         // read next
-        file >> currentTransaction;
-    } while (file.good());
+        transactionFile >> currentTransaction;
+    } while (transactionFile.good());
 
-    file.close();
+    transactionFile.close();
 
     // delete processed transactions
-    ofstream f("transactions.txt");
-    f.close();
-
+    ofstream proccesed("transactions.txt");
+    proccesed.close();
     return true;
 }
