@@ -34,6 +34,8 @@ public:
     static string find_bill_number(int userId);
 
     static int find_user_id(string billNumber);
+
+    static string create_bill_number(int userId);
 };
 
 #endif

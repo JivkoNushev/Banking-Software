@@ -224,3 +224,8 @@ int Bill::find_user_id(string billNumber)
     } while (!file.eof());
     file.close();
 }
+
+string Bill::create_bill_number(int userId)
+{
+    return to_string(userId + rand() % 1000);
+}

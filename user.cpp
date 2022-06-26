@@ -35,8 +35,8 @@ void User::add_user()
     }
     user_file.write((char *)this, sizeof(*this));
 
-    // Bill new_bill(Bill::find_bill_number(userId), userId, 0);
-    // bill_file.write((char *)&new_bill, sizeof(new_bill));
+    Bill new_bill(Bill::create_bill_number(userId), userId, 0);
+    bill_file.write((char *)&new_bill, sizeof(new_bill));
 
     user_file.close();
     bill_file.close();
