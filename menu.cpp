@@ -49,7 +49,7 @@ int signin_menu()
     string username, password;
     do
     {
-        system("cls");
+        system("clear");
         
         cout << "|               Sign in                   |\n";
         
@@ -67,7 +67,7 @@ int signup_menu()
     string username, password;
     do
     {
-        system("cls");
+        system("clear");
         
         cout << "|               Sign up                   |\n";
         cout << "Enter username: ";
@@ -82,7 +82,7 @@ int signup_menu()
 
 int print_home_menu()
 {
-    system("cls");
+    system("clear");
     int input = -1;
     while(1)
     {
@@ -95,13 +95,13 @@ int print_home_menu()
             case 2:
                 return signup_menu();
             case 3:
-                system("cls");
-                cout << "Exited from the bank";
+                system("clear");
+                cout << "Exited from the bank" << endl;
                 return -1;
             default:
                 break;
         }
-        system("cls");
+        system("clear");
     }
 }
 
@@ -110,7 +110,7 @@ int print_home_menu()
 //
 void print_menu(User &user)
 {
-    system("cls");
+    system("clear");
     int input = -1;
     
     while(1)
@@ -132,11 +132,11 @@ void print_menu(User &user)
                 Transaction::process_transactions();
                 break;
             case 5:
-                system("cls");
+                system("clear");
                 return;
             default:
                 break;
         }
-        system("cls");
+        system("clear");
     }
 }

@@ -27,20 +27,20 @@ void User::add_user()
     }
 
     ofstream bill_file;
-    bill_file.open("bill_database.txt", ios::in);
-    if(!bill_file)
+    bill_file.open("bill_database.txt", ios::app);
+    if (!bill_file)
     {
         cout << "File error" << endl;
         return;
     }
-
     user_file.write((char *)this, sizeof(*this));
 
-    Bill new_bill(Bill::find_bill_number(userId),userId,0);
+    Bill new_bill(Bill::find_bill_number(userId), userId, 0);
     bill_file.write((char *)&new_bill, sizeof(new_bill));
 
     user_file.close();
     bill_file.close();
+    cout << "User added!" << endl;
 }
 
 bool User::username_exists(string username)
@@ -48,10 +48,7 @@ bool User::username_exists(string username)
     ifstream file;
     file.open("user_database.txt", ios::in);
     if (!file)
-    {
-        cout << "File error" << endl;
         return false;
-    }
 
     User currentUser;
 
