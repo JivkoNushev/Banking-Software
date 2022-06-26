@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 #include "menu.h"
 #include "user.h"
@@ -54,9 +55,9 @@ int signin_menu()
         cout << "|               Sign in                   |\n";
         
         cout << "Enter username: ";
-        cin >> username;
+        getline(cin, username);
         cout << "Enter password: ";
-        cin >> password;
+        getline(cin, password);
     } while(!User::user_exists(username, password));
 
     return User::user_id(username);
@@ -65,15 +66,16 @@ int signin_menu()
 int signup_menu()
 {
     string username = "", password = "";
+
     do
     {
         system("clear");
         
         cout << "|               Sign up                   |\n";
         cout << "Enter username: ";
-        cin >> username;
+        getline(cin, username);
         cout << "Enter password: ";
-        cin >> password;
+        getline(cin, password);
     } while(User::username_exists(username));
     User user(username, password, User::generate_id(username));
     user.add_user();
@@ -81,15 +83,35 @@ int signup_menu()
     return user.get_id();
 }
 
+bool isNumber(const string& s)
+{
+    for (char const &ch : s) {
+        if (std::isdigit(ch) == 0)
+            return false;
+    }
+    return true;
+}
+
 int print_home_menu()
 {
-    system("clear");
-    int input = -1;
+    string input;
+    stringstream ss;
+    int input_to_int;
     while(1)
     {
-        home_menu(1);
-        cin >> input;
-        switch(input)
+        do
+        {
+            system("clear");
+            home_menu(1);
+            getline(cin, input);
+            ss << input;
+            ss >> input;
+            if(!isNumber(input))
+                continue;
+            input_to_int = stoi(input);
+        }while(input_to_int < 1 && input_to_int > 3);
+
+        switch(input_to_int)
         {
             case 1:
                 return signin_menu();
@@ -111,15 +133,26 @@ int print_home_menu()
 //
 void print_menu(User &user)
 {
-    system("clear");
-    int input = -1;
+    string input;
+    stringstream ss;
+    int input_to_int;
     
     while(1)
     {
-        home_menu(2);
-        cin >> input;
         
-        switch(input)
+        do
+        {
+            system("clear");
+            home_menu(2);
+            getline(cin, input);
+            ss << input;
+            ss >> input;
+            if(!isNumber(input))
+                continue;
+            input_to_int = stoi(input);
+        }while(input_to_int < 1 && input_to_int > 5);
+
+        switch(input_to_int)
         {
             case 1:
                 user.withdraw();
