@@ -2,7 +2,7 @@
 #include <string>
 #include <stdint-gcc.h>
 #include <string.h>
-#include <byteswap.h>
+//#include <byteswap.h>
 #include "hash.h"
 using namespace std;
 

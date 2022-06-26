@@ -56,6 +56,8 @@ bool User::username_exists(string username)
         return false;
 
     file.read((char *)&currentUser, sizeof(currentUser));
+    
+
     do
     {
         if (currentUser.get_name() == username)

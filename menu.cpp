@@ -77,6 +77,7 @@ int signup_menu()
     } while(User::username_exists(username));
     User user(username, password, User::generate_id(username));
     user.add_user();
+
     return user.get_id();
 }
 
@@ -117,6 +118,7 @@ void print_menu(User &user)
     {
         home_menu(2);
         cin >> input;
+        
         switch(input)
         {
             case 1:
