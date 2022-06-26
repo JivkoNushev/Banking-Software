@@ -3,6 +3,7 @@
 #include <sstream>
 
 #include "menu.h"
+#include "hash.h"
 #include "user.h"
 #include "transaction.h"
 using namespace std;
@@ -76,6 +77,7 @@ int signup_menu()
         getline(cin, username);
         cout << "Enter password: ";
         getline(cin, password);
+        password = hash_string(password);
     } while(User::username_exists(username));
     User user(username, password, User::generate_id(username));
     user.add_user();
