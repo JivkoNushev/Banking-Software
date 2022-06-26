@@ -18,3 +18,9 @@ OPEN:
 
 run:
 	./main.out
+
+trash:
+	rm user_database.txt
+	touch user_database.txt
+	rm bill_database.txt
+	touch bill_database.txt

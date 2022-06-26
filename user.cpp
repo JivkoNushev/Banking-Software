@@ -46,9 +46,9 @@ void User::add_user()
         cout << "File error" << endl;
         return;
     }
-    user_file << this; //?
+    user_file << *this; //?
     Bill new_bill(Bill::create_bill_number(userId), userId, 0);
-    user_file << new_bill;
+    bill_file << new_bill;
     
     user_file.close();
     bill_file.close();
