@@ -138,7 +138,7 @@ bool Bill::change_balance(string billNumber, float newBalance)
         cout << "File error" << endl;
         return 0;
     }
-
+    
     Bill current_bill;
     file >> current_bill;
     do

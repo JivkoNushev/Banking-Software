@@ -226,7 +226,6 @@ bool User::deposit()
     float amount = 0;
     cout << "Enter deposit amount: ";
     cin >> amount;
-
     if (amount < 0)
     {
         cout << "\nCan't deposit that amount\n";

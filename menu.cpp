@@ -101,7 +101,7 @@ int print_home_menu()
     int input_to_int;
     while(1)
     {
-        do
+        /*do
         {
             system("clear");
             home_menu(1);
@@ -112,7 +112,10 @@ int print_home_menu()
                 continue;
             input_to_int = stoi(input);
         }while(input_to_int < 1 && input_to_int > 3);
-
+        */
+        system("clear");
+        home_menu(2);
+        cin >> input_to_int;
         switch(input_to_int)
         {
             case 1:
@@ -141,7 +144,7 @@ void print_menu(User &user)
     
     while(1)
     {
-        do
+        /*do
         {
             system("clear");
             home_menu(2);
@@ -152,6 +155,10 @@ void print_menu(User &user)
                 continue;
             input_to_int = stoi(input);
         }while(input_to_int < 1 && input_to_int > 5);
+        */
+        system("clear");
+        home_menu(2);
+        cin >> input_to_int;
 
         switch(input_to_int)
         {
