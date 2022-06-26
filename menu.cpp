@@ -55,7 +55,7 @@ int signin_menu()
         
         cout << "Enter username: ";
         cin >> username;
-        cout << "Enter password";
+        cout << "Enter password: ";
         cin >> password;
     } while(!User::user_exists(username, password));
 
