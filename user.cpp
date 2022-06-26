@@ -35,8 +35,8 @@ void User::add_user()
     }
     user_file.write((char *)this, sizeof(*this));
 
-    Bill new_bill(Bill::find_bill_number(userId), userId, 0);
-    bill_file.write((char *)&new_bill, sizeof(new_bill));
+    // Bill new_bill(Bill::find_bill_number(userId), userId, 0);
+    // bill_file.write((char *)&new_bill, sizeof(new_bill));
 
     user_file.close();
     bill_file.close();
@@ -48,7 +48,10 @@ bool User::username_exists(string username)
     ifstream file;
     file.open("user_database.txt", ios::in);
     if (!file)
-        return false;
+    {
+        cout << "File error" << endl;
+        return 0;
+    }
 
     User currentUser;
 
@@ -56,8 +59,6 @@ bool User::username_exists(string username)
         return false;
 
     file.read((char *)&currentUser, sizeof(currentUser));
-    
-
     do
     {
         if (currentUser.get_name() == username)
@@ -224,7 +225,7 @@ bool User::deposit()
 bool User::transfer()
 {
     float transferAmount = 0;
-    string billNumberTo;
+    string billNumberTo = "";
 
     cout << "Enter transfer amount: ";
     cin >> transferAmount;

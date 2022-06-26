@@ -46,7 +46,7 @@ void home_menu(int number)
 
 int signin_menu()
 {
-    string username, password;
+    string username = "", password = "";
     do
     {
         system("clear");
@@ -64,7 +64,7 @@ int signin_menu()
 
 int signup_menu()
 {
-    string username, password;
+    string username = "", password = "";
     do
     {
         system("clear");
