@@ -1,6 +1,8 @@
 #ifndef HASH
 #define HASH
-
+#include <iostream>
+#include <string>
+#include <sstream>
 #include <string>
 using namespace std;
 
