@@ -14,6 +14,7 @@ void Bill::set_balance(float newBalance) { balance = newBalance; }
 string Bill::get_billNumber() { return billNumber; }
 int Bill::get_userId() { return userId; }
 float Bill::get_balance() { return balance; }
+
 ostream &operator<<(ostream &os, Bill &bill)
 {
     os << bill.billNumber << endl
@@ -206,6 +207,7 @@ string Bill::find_bill_number(int userId)
     } while (file.good());
 
     file.close();
+    return 0;
 }
 
 int Bill::find_user_id(string billNumber)
@@ -229,8 +231,9 @@ int Bill::find_user_id(string billNumber)
         }
         file >> current_bill;
     } while (file.good());
-    
+
     file.close();
+    return 0;
 }
 
 string Bill::create_bill_number(int userId)

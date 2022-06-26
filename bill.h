@@ -1,8 +1,8 @@
 #ifndef BILL
 #define BILL
+#include <fstream>
 #include <string>
 #include "user.h"
-#include <fstream>
 using namespace std;
 
 class Bill
@@ -23,8 +23,8 @@ public:
     int get_userId();
     float get_balance();
 
-    friend ostream &operator<<(ostream &os, User &user);
-    friend istream &operator>>(istream &is, User &user);
+    friend ostream &operator<<(ostream &os, Bill &bill);
+    friend istream &operator>>(istream &is, Bill &bill);
 
     static float find_balance(int userId);
 
