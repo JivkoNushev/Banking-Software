@@ -20,7 +20,7 @@ ostream &operator<<(ostream &os, User &user)
 {
     os << user.userName << endl
        << user.password << endl
-       << user.userId;
+       << user.userId << endl;
     return os;
 }
 istream &operator>>(istream &is, User &user)
